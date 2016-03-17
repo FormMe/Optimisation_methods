@@ -33,11 +33,11 @@ void DownhillSimplexMethod::DSM(func _f, Vertex &v, double _alpha, double _beta,
 void DownhillSimplexMethod::Initialization(Vertex &v)
 {
 	N = v.vec.size();
-	double t = 0.1,
+	double t = 1,
 		q = t / N / sqrt(2),
 		w = sqrt(N + 1) - 1,
 		d1 = q*(w + N),
-		d2 = q / w;
+		d2 = q * w;
 	smplx = vector<Vertex>(N + 1, v);
 	F = vector<double>(N + 1);
 	max_ind = 0; min_ind = 0;
@@ -77,14 +77,6 @@ void DownhillSimplexMethod::Average()
 	f_average = f(average.vec);
 }
 
-bool DownhillSimplexMethod::QuitCase()
-{
-	double r = 0;
-	for (int i = 0; i < N; i++)
-		r += (F[i] - f_average)*(F[i] - f_average);
-	auto res = sqrt(r / (N + 1));
-	return res < eps;
- }
 
 void DownhillSimplexMethod::Reflection()
 {
@@ -99,13 +91,13 @@ void DownhillSimplexMethod::Contraction()
 
 	if (f_contracted < f_min)
 	{
-		smplx[min_ind] = contracted;
-		F[min_ind] = f_contracted;
+		smplx[max_ind] = contracted;
+		F[max_ind] = f_contracted;
 	}
 	else
 	{
-		smplx[min_ind] = reflected;
-		F[min_ind] = f_reflected;
+		smplx[max_ind] = reflected;
+		F[max_ind] = f_reflected;
 	}
 }
 
@@ -126,11 +118,20 @@ void DownhillSimplexMethod::Expansion()
 	}
 }
 
-void DownhillSimplexMethod::Reduction() 
+void DownhillSimplexMethod::Reduction()
 {
 	for (int i = 0; i < N + 1; i++)
 	{
-		smplx[i] = (smplx[i] + min)*0.5;
+		smplx[i] = min + (smplx[i] - min)*0.5;
 		F[i] = f(smplx[i].vec);
 	}
+}
+
+bool DownhillSimplexMethod::QuitCase()
+{
+	double r = 0;
+	for (int i = 0; i < N; i++)
+		r += (F[i] - f_average)*(F[i] - f_average);
+	auto res = sqrt(r / N);
+	return res < eps;
 }
