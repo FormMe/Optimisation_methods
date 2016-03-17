@@ -21,12 +21,8 @@ private:
 	vector<double> F;
 	
 	int min_ind;
-	Vertex min;
-	double f_min;
-
 	int max_ind;
-	Vertex max;
-	double f_max;
+	int g_ind;
 
 	Vertex average;
 	double f_average;
