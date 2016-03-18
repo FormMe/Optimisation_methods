@@ -13,7 +13,9 @@ void DownhillSimplexMethod::DSM(func _f, Vertex &v, double _alpha, double _beta,
 	f = _f;
 	alpha = _alpha;
 	beta = _beta;
+
 	gamma = _gamma;
+	auto k = 1;
 	Initialization(v);
 	while (!QuitCase())
 	{
@@ -24,34 +26,43 @@ void DownhillSimplexMethod::DSM(func _f, Vertex &v, double _alpha, double _beta,
 			Contraction();
 
 		if ((F[min_ind] < f_reflected) && (f_reflected <= F[g_ind]))
-		{	
+		{
 			smplx[max_ind] = reflected;
 			F[max_ind] = f_reflected;
 		}
 
 		auto flag = false;
 		if ((F[max_ind] < f_reflected) && (f_reflected <= F[g_ind]))
-		{	
+		{
 			flag = true;
 			swap(F[max_ind], f_reflected);
 			swap(smplx[max_ind], reflected);
 		}
 
 		if (f_reflected > F[max_ind])	flag = true;
-		if (flag) 
+		if (flag)
 			Expansion();
+		if (k++ % 10 == 0)
+		{
+			cout << "ddd";
+		}
 	}
 }
 
 void DownhillSimplexMethod::Initialization(Vertex &v)
 {
 	N = v.vec.size();
-	double t = 1,
-		q = t / N / sqrt(2),
-		w = sqrt(N + 1) - 1,
-		d1 = q*(w + N),
-		d2 = q * w;
-	smplx = vector<Vertex>(N + 1, v);
+	//double t = 1,
+	//	q = t / N / sqrt(2),
+	//	w = sqrt(N + 1) - 1,
+	//	d1 = q*(w + N),
+	//	d2 = q * w;
+	//smplx = vector<Vertex>(N + 1, v);
+	smplx = vector<Vertex>{
+		Vertex(vector<double>{10,9}),
+		Vertex(vector<double>{10,-2}),
+		Vertex(vector<double>{21,1})
+	};
 	F = vector<double>(N + 1);
 	max_ind = min_ind = g_ind = 0;
 	contracted = Vertex(N);
@@ -60,8 +71,8 @@ void DownhillSimplexMethod::Initialization(Vertex &v)
 	average = Vertex(N);
 	for (auto i = 0; i < N + 1; i++)
 	{
-		for (auto j = 0; j < N && i != 0; j++)
-			smplx[i].vec[j] = (i - 1 != j) ? d2 : d1;
+		//for (auto j = 0; j < N && i != 0; j++)
+		//	smplx[i].vec[j] = (i - 1 != j) ? d2 : d1;
 		F[i] = f(smplx[i].vec);
 	}
 }

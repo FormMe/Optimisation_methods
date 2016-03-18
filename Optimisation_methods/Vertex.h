@@ -6,43 +6,32 @@
 #include <algorithm>
 #include <iostream>
 
-using namespace std; 
+using namespace std;
 
 typedef  function<double(vector<double>)> func;
 
 struct Vertex
 {
-	Vertex()
-	{
-		vec = vector<double>(5);
-	}
-	Vertex(int n)
-	{
-		vec = vector<double>(n);
-	}
-	Vertex(vector<double> &_vec)
-	{
-		vec = _vec;
-	}
-	~Vertex()
-	{
-		vec.~vector();
-	}
+	Vertex() : vec(5) {}
+	Vertex(int n) : vec(n) {}
+	Vertex(vector<double> &_vec) : vec(_vec) {}
 
 	vector<double> vec;
 
-	Vertex operator+ (Vertex _vec)
+	Vertex operator+ (Vertex _vec) const
 	{
-		for (int i = 0; i < vec.size(); i++)
-			vec[i] += _vec.vec[i];
-		return Vertex(vec);
+		auto v(vec);
+		for (int i = 0; i < v.size(); i++)
+			v[i] += _vec.vec[i];
+		return Vertex(v);
 	}
 
-	Vertex operator- (Vertex _vec)
+	Vertex operator- (Vertex _vec) const
 	{
-		for (int i = 0; i < vec.size(); i++)
-			vec[i] -= _vec.vec[i];
-		return Vertex(vec);
+		auto v(vec);
+		for (int i = 0; i < v.size(); i++)
+			v[i] -= _vec.vec[i];
+		return Vertex(v);
 	}
 
 	double operator* (Vertex _vec)
@@ -53,11 +42,12 @@ struct Vertex
 		return res;
 	}
 
-	Vertex operator* (double c)
+	Vertex operator* (double c) 
 	{
+		auto v(vec);
 		for (int i = 0; i < vec.size(); i++)
-			vec[i] *= c;
-		return Vertex(vec);
+			v[i] *= c;
+		return Vertex(v);
 	}
 
 	double norm()
