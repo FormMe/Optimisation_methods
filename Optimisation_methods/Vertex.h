@@ -9,6 +9,7 @@
 using namespace std;
 
 typedef  function<double(vector<double>)> func;
+typedef  function<double(double)> func2;
 
 struct Vertex
 {
@@ -18,26 +19,26 @@ struct Vertex
 
 	vector<double> vec;
 
-	Vertex operator+ (Vertex _vec) const
+	Vertex operator+ (Vertex &_vec) 
 	{
 		auto v(vec);
-		for (int i = 0; i < v.size(); i++)
+		for (auto i = 0; i < v.size(); i++)
 			v[i] += _vec.vec[i];
 		return Vertex(v);
 	}
 
-	Vertex operator- (Vertex _vec) const
+	Vertex operator- (Vertex &_vec) 
 	{
 		auto v(vec);
-		for (int i = 0; i < v.size(); i++)
+		for (auto i = 0; i < v.size(); i++)
 			v[i] -= _vec.vec[i];
 		return Vertex(v);
 	}
 
-	double operator* (Vertex _vec)
+	double operator* (Vertex &_vec)
 	{
 		double res = 0;
-		for (int i = 0; i < vec.size(); i++)
+		for (auto i = 0; i < vec.size(); i++)
 			res += vec[i] * _vec.vec[i];
 		return res;
 	}
@@ -45,16 +46,16 @@ struct Vertex
 	Vertex operator* (double c) 
 	{
 		auto v(vec);
-		for (int i = 0; i < vec.size(); i++)
-			v[i] *= c;
+		for (auto &v : vec)
+			v *= c;
 		return Vertex(v);
 	}
 
 	double norm()
 	{
 		double res = 0;
-		for (int i = 0; i < vec.size(); i++)
-			res += vec[i] * vec[i];
+		for (auto v : vec)
+			res += v*v;
 		return sqrt(res);
 	}
 };

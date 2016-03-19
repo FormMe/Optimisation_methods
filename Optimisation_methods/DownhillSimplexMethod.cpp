@@ -10,11 +10,7 @@ DownhillSimplexMethod::~DownhillSimplexMethod()
 
 void DownhillSimplexMethod::DSM(func _f, Vertex &v, double _alpha, double _beta, double _gamma)
 {
-	f = _f;
-	alpha = _alpha;
-	beta = _beta;
-
-	gamma = _gamma;
+	f = _f;	alpha = _alpha;	beta = _beta;	gamma = _gamma;
 	auto k = 1;
 	Initialization(v);
 	while (!QuitCase())

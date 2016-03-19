@@ -111,11 +111,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DownhillSimplexMethod.cpp" />
+    <ClCompile Include="GoldenSectionSearch.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Solver.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DownhillSimplexMethod.h" />
+    <ClInclude Include="GoldenSectionSearch.h" />
     <ClInclude Include="Solver.h" />
     <ClInclude Include="Vertex.h" />
   </ItemGroup>

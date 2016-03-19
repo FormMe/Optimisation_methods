@@ -19,7 +19,7 @@ private:
 
 	vector<Vertex> smplx;
 	vector<double> F;
-	
+
 	int min_ind;
 	int max_ind;
 	int g_ind;

@@ -24,6 +24,9 @@
     <ClCompile Include="Solver.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
+    <ClCompile Include="GoldenSectionSearch.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DownhillSimplexMethod.h">
@@ -33,6 +36,9 @@
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
     <ClInclude Include="Vertex.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="GoldenSectionSearch.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
   </ItemGroup>
