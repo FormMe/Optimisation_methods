@@ -27,15 +27,15 @@ pair<double, double> GoldenSectionSearch::FindInterval(double lambda0, double d)
 	return make_pair(min(lambda0, lambda2), max(lambda0, lambda2));
 }
 
-double GoldenSectionSearch::GSS(func _f, Vertex &_x, Vertex &_S)
+double GoldenSectionSearch::GSS(Vertex &_x, Vertex &_S)
 {
-	S = _S;	x = _x;	f = _f;
+	S = _S;	x = _x;	
 	auto interval = FindInterval(1, 0.1);
 	auto l1 = interval.first + 0.381966011*(interval.second - interval.first);
 	auto l2 = interval.second - 0.381966011*(interval.second - interval.first);
 	auto f_l1 = f((x + S*l1).vec);
 	auto f_l2 = f((x + S*l2).vec);
-	while (abs(interval.second - interval.first) > 1e-13)
+	while (abs(interval.second - interval.first) > eps)
 		if (f_l1 < f_l2)
 		{
 			interval.second = l2;
