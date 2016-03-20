@@ -19,6 +19,7 @@ Vertex NonlinearConjugateGradientMethod::NCGM(func _f, Vertex _x)
 	x = Vertex(N);
 	x1 = Vertex(N);
 	grad = Vertex(N);
+	grad1 = Vertex(N);
 	S = Vertex(N);
 	Grad();
 	S = grad;
@@ -26,10 +27,7 @@ Vertex NonlinearConjugateGradientMethod::NCGM(func _f, Vertex _x)
 	{
 		lambda = _gss.GSS(x, S);
 		x = x + S*lambda;
-		auto gn = grad.norm();
-		Grad();
-		auto gn1 = grad.norm();
-		w = (gn1*gn1) / (gn*gn);
+		PolakRibiere();
 		S = grad + S*w;
 	}
 	return x;
@@ -43,4 +41,19 @@ void NonlinearConjugateGradientMethod::Grad()
 		x1 = x; x1.vec[i] += h;
 		grad.vec[i] = -(f(x1.vec) - fx) / h;
 	}
+}
+
+void NonlinearConjugateGradientMethod::PolakRibiere()
+{
+	grad1 = grad;
+	Grad();
+	w = grad*(grad - grad1) / (grad1*S);
+}
+
+void NonlinearConjugateGradientMethod::FletcherReeves()
+{
+	auto gn = grad.norm();
+	Grad();
+	auto gn1 = grad.norm();
+	w = (gn1*gn1) / (gn*gn);
 }

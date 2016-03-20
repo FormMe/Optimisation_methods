@@ -16,6 +16,7 @@ private:
 	Vertex x;
 	Vertex x1;
 	Vertex grad;
+	Vertex grad1;
 	Vertex S;
 	double lambda;
 	double w;
@@ -24,6 +25,10 @@ private:
 	int N;
 
 	void Grad();
-	
+	void PolakRibiere();
+	void FletcherReeves();
+
+
+
 };
 
