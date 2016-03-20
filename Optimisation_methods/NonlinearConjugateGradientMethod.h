@@ -8,7 +8,7 @@ public:
 	NonlinearConjugateGradientMethod();
 	~NonlinearConjugateGradientMethod();
 
-	void NCGM(func _f, Vertex _x);
+	Vertex NCGM(func _f, Vertex _x);
 
 private:
 	GoldenSectionSearch _gss;

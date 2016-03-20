@@ -45,10 +45,10 @@ struct Vertex
 
 	Vertex operator* (double c) 
 	{
-		auto v(vec);
-		for (auto &v : vec)
+		auto _v(vec);
+		for (auto &v : _v)
 			v *= c;
-		return Vertex(v);
+		return Vertex(_v);
 	}
 
 	double norm()
@@ -57,6 +57,17 @@ struct Vertex
 		for (auto v : vec)
 			res += v*v;
 		return sqrt(res);
+	}
+
+	friend ostream& operator << (ostream& ostream_, const Vertex& v)
+	{
+		ostream_.setf(ios::scientific);
+		ostream_.precision(16);
+		ostream_ << "[ " ;
+		for(auto x : v.vec)
+			ostream_ << x << ", ";
+		ostream_ << " ]";
+		return ostream_;
 	}
 };
 

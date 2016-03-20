@@ -10,7 +10,7 @@ GoldenSectionSearch::~GoldenSectionSearch()
 {
 }
 
-pair<double, double> GoldenSectionSearch::FindInterval(double lambda0, double d) 
+pair<double, double> GoldenSectionSearch::FindInterval(double lambda0, double d)
 {
 	double lambda1, lambda2;
 	if (f((x + S*lambda0).vec) < f((x + S*(lambda0 + d)).vec))
@@ -22,15 +22,16 @@ pair<double, double> GoldenSectionSearch::FindInterval(double lambda0, double d)
 		lambda2 = lambda1 + d;
 		lambda0 = lambda1;
 
-	} while (f((x + S*lambda1).vec) > f((x + S*(lambda2)).vec));
+	} while (f((x + S*lambda1).vec) > f((x + S*lambda2).vec));
 	lambda0 -= d / 2;
 	return make_pair(min(lambda0, lambda2), max(lambda0, lambda2));
 }
 
 double GoldenSectionSearch::GSS(Vertex &_x, Vertex &_S)
 {
-	S = _S;	x = _x;	
-	auto interval = FindInterval(1, 0.1);
+	S = _S;	x = _x;
+	//	auto interval = make_pair(-10, 10);
+	auto interval = FindInterval(0, 0.05);
 	auto l1 = interval.first + 0.381966011*(interval.second - interval.first);
 	auto l2 = interval.second - 0.381966011*(interval.second - interval.first);
 	auto f_l1 = f((x + S*l1).vec);
