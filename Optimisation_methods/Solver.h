@@ -3,8 +3,7 @@
 #include "NonlinearConjugateGradientMethod.h"
 
 
-class Solver : public DownhillSimplexMethod,
-	public NonlinearConjugateGradientMethod
+class Solver : public NonlinearConjugateGradientMethod
 {
 public:
 	Solver();
