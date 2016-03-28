@@ -1,31 +1,19 @@
 #include "NewtonMethod.h"
 
-
-
-NewtonMethod::NewtonMethod()
+NewtonMethod::NewtonMethod() : eps(1e-15), h(1), h1(1e-8)
 {
 }
-
 
 NewtonMethod::~NewtonMethod()
 {
 }
 
-Vertex NewtonMethod::NM(func _f, Vertex _x)
+Vertex NewtonMethod::NM(func _f, Vertex &_x)
 {
-	eps = 1e-8; h = 1;
-	_gss = GoldenSectionSearch(_f, eps);
 	f = _f; x = _x; N = x.vec.size();
-	x1 = Vertex(N);
-	x2 = Vertex(N);
-	x3 = Vertex(N);
-	x4 = Vertex(N);
-	grad = Vertex(N);
-	d = Vertex(N);
-	H = vector<vector<double>>(N, vector<double>(N));
-	H1 = vector<vector<double>>(N, vector<double>(N));
+	Init();
 	Grad();
-	while (grad.norm() > eps)
+	while (grad.norm() > eps) //разобраться с минусами
 	{
 		Hessian();
 		Inversion();
@@ -33,45 +21,42 @@ Vertex NewtonMethod::NM(func _f, Vertex _x)
 		{
 			d = grad*H;
 			lambda = _gss.GSS(x, d);
-			x = x + d*lambda;
+			x = x - d*lambda;
 		}
 		else
 		{
 			lambda = _gss.GSS(x, grad);
-			x = x + d*lambda;
+			x = x - grad*lambda;
 		}
 		Grad();
 	}
 	return x;
 }
 
+
 void NewtonMethod::Grad()
 {
 	auto fx = f(x.vec);
 	for (auto i = 0; i < N; i++)
 	{
-		x1 = x; x1.vec[i] += h;
-		grad.vec[i] = -(f(x1.vec) - fx) / h;
+		x1 = x; x1.vec[i] += h1;
+		grad.vec[i] = (f(x1.vec) - fx) / h1;
 	}
 }
 
 void NewtonMethod::Hessian()
 {
-	auto dh = 4 * h*h;
+	auto fx = f(x.vec);
 	for (auto i = 0; i < N; i++)
 	{
 		for (auto j = 0; j < N; j++)
 		{
-			x1 = x2 = x3 = x4 = x;
+			x1 = x2 = x3 = x;
 			x1.vec[i] += h;		x1.vec[j] += h;
-			x2.vec[i] += h;		x2.vec[j] -= h;
-			x3.vec[i] -= h;		x3.vec[j] += h;
-			x4.vec[i] -= h;		x4.vec[j] -= h;
-			H[i][j] = (f(x1.vec) - f(x2.vec) - f(x3.vec) + f(x4.vec)) / dh;
-			//return (f(x + hx, y + hy) - f(x + hx, y - hy) - f(x - hx, y + hy) + f(x - hx, y - hy)) / (4 * hx*hy);
+			x2.vec[i] += h;		x3.vec[j] += h;
+			H[i][j] = (f(x1.vec) - f(x2.vec) - f(x3.vec) + fx) / (h*h);
 		}
 	}
-
 }
 
 void NewtonMethod::Inversion()
@@ -98,7 +83,6 @@ void NewtonMethod::Inversion()
 			}
 		}
 	}
-
 	for (auto k = N - 1; k > 0; k--)
 		for (auto i = k - 1; i >= 0; i--)
 		{
@@ -110,4 +94,16 @@ void NewtonMethod::Inversion()
 			}
 		}
 	H = H1;
+}
+
+void NewtonMethod::Init()
+{
+	_gss = GoldenSectionSearch(f, eps);
+	x1 = Vertex(N);
+	x2 = Vertex(N);
+	x3 = Vertex(N);
+	grad = Vertex(N);
+	d = Vertex(N);
+	H = vector<vector<double>>(N, vector<double>(N));
+	H1 = vector<vector<double>>(N, vector<double>(N));
 }

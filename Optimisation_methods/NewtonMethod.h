@@ -9,7 +9,7 @@ public:
 	NewtonMethod();
 	~NewtonMethod();
 
-	Vertex NM(func _f, Vertex _x);
+	Vertex NM(func _f, Vertex &_x);
 
 private:
 	LU_eigenvalues _eigenvalues;
@@ -19,18 +19,18 @@ private:
 	Vertex x1;
 	Vertex x2;
 	Vertex x3;
-	Vertex x4;
 	Vertex grad;
-	Vertex grad1;
 	Vertex d;
 	vector<vector<double>> H;
 	vector<vector<double>> H1;
 	double lambda;
 	double eps;
 	double h;
+	double h1;
 	int N;
 
 	void Grad();
 	void Hessian();
 	void Inversion();
+	void Init();
 };
