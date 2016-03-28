@@ -30,6 +30,12 @@
     <ClCompile Include="NonlinearConjugateGradientMethod.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
+    <ClCompile Include="NewtonMethod.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="LU_eigenvalues.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DownhillSimplexMethod.h">
@@ -45,6 +51,12 @@
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
     <ClInclude Include="NonlinearConjugateGradientMethod.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="NewtonMethod.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="LU_eigenvalues.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
   </ItemGroup>

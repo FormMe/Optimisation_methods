@@ -51,6 +51,18 @@ struct Vertex
 		return Vertex(_v);
 	}
 
+	Vertex operator* (vector<vector<double>> M)
+	{
+		auto N = vec.size();
+		auto res = Vertex(N);
+		for (auto i = 0; i < N; ++i)
+			for (auto j = 0; j < N; j++)
+			{
+				res.vec[i] += vec[j] * M[i][j];
+			}
+		return res;
+	}
+
 	double norm()
 	{
 		double res = 0;
