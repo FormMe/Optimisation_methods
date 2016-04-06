@@ -24,6 +24,6 @@ protected:
 	double GSS(Vertex &_x, Vertex &_S);
 
 private:
-	pair<double, double> FindInterval(double x0, double d);
+	pair<double, double> FindInterval(double x0, double d, Vertex &_x, Vertex &_S);
 };
 

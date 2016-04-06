@@ -8,10 +8,10 @@ Solver::Solver(string filename)
 }
 
 
-pair<double, double> Solver::FindInterval(double lambda0, double d)
+pair<double, double> Solver::FindInterval(double lambda0, double d, Vertex &_x, Vertex &_S)
 {
 	double lambda1, lambda2;
-	if (f((x + S*lambda0).vec) < f((x + S*(lambda0 + d)).vec))
+	if (f((_x + _S*lambda0).vec) < f((_x + _S*(lambda0 + d)).vec))
 		d = -d;
 	do
 	{
@@ -20,7 +20,7 @@ pair<double, double> Solver::FindInterval(double lambda0, double d)
 		lambda2 = lambda1 + d;
 		lambda0 = lambda1;
 
-	} while (f((x + S*lambda1).vec) > f((x + S*lambda2).vec));
+	} while (f((_x + _S*lambda1).vec) > f((_x + _S*lambda2).vec));
 	lambda0 -= d / 2;
 	return make_pair(min(lambda0, lambda2), max(lambda0, lambda2));
 }
@@ -28,12 +28,11 @@ pair<double, double> Solver::FindInterval(double lambda0, double d)
 
 double Solver::GSS(Vertex &_x, Vertex &_S)
 {
-	S = _S;	x = _x;
-	auto interval = FindInterval(0, 0.05);
+	auto interval = FindInterval(0, 0.05, _x, _S);
 	auto l1 = interval.first + 0.381966011*(interval.second - interval.first);
 	auto l2 = interval.second - 0.381966011*(interval.second - interval.first);
-	auto f_l1 = f((x + S*l1).vec);
-	auto f_l2 = f((x + S*l2).vec);
+	auto f_l1 = f((_x + _S*l1).vec);
+	auto f_l2 = f((_x + _S*l2).vec);
 	while (abs(interval.second - interval.first) > eps)
 		if (f_l1 < f_l2)
 		{
@@ -41,7 +40,7 @@ double Solver::GSS(Vertex &_x, Vertex &_S)
 			l2 = l1;
 			f_l2 = f_l1;
 			l1 = interval.first + 0.381966011*(interval.second - interval.first);
-			f_l1 = f((x + S*l1).vec);
+			f_l1 = f((_x + _S*l1).vec);
 		}
 		else
 		{
@@ -49,7 +48,7 @@ double Solver::GSS(Vertex &_x, Vertex &_S)
 			l1 = l2;
 			f_l1 = f_l2;
 			l2 = interval.second - 0.381966011*(interval.second - interval.first);
-			f_l2 = f((x + S*l2).vec);
+			f_l2 = f((_x + _S*l2).vec);
 		}
 	return (interval.first + interval.second) / 2;
 }

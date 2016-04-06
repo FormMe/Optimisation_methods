@@ -31,8 +31,8 @@ void NewtonMethod::Grad()
 	auto fx = f(x.vec);
 	for (auto i = 0; i < N; i++)
 	{
-		x1 = x; x1.vec[i] += h1;
-		grad.vec[i] = -(f(x1.vec) - fx) / h1;
+		x1 = x; x1.vec[i] += h;
+		grad.vec[i] = -(f(x1.vec) - fx) / h;
 	}
 }
 
@@ -44,12 +44,12 @@ void NewtonMethod::Hessian()
 		for (auto j = 0; j < N; j++)
 		{
 			x1 = x2 = x3 = x;
-			x1.vec[i] += h;		x1.vec[j] += h;
-			x2.vec[i] += h;		x3.vec[j] += h;
+			x1.vec[i] += h1;		x1.vec[j] += h1;
+			x2.vec[i] += h1;		x3.vec[j] += h1;
 			auto f1 = f(x1.vec);
 			auto f2 = f(x2.vec);
 			auto f3 = f(x3.vec);
-			H[i][j] = (f1 - f2 - f3 + fx) / (h*h);
+			H[i][j] = (f1 - f2 - f3 + fx) / (h1*h1);
 		}
 	}
 }
