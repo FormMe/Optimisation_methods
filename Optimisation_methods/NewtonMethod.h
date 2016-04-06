@@ -1,14 +1,14 @@
 #pragma once
 #include "Solver.h"
 
-class NewtonMethod: Solver
+class NewtonMethod: public Solver
 {
 public:
 	NewtonMethod(string filename) : Solver(filename) {};
 	NewtonMethod() : Solver() {};
-	~NewtonMethod();
+	~NewtonMethod(){};
 
-	Vertex Calc(func _f, Vertex &_x);
+	virtual Vertex Calc(func _f, Vertex &_x);
 
 private:
 	Vertex x1;

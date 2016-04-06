@@ -12,13 +12,13 @@ typedef  function<double(vector<double>)> func;
 
 struct Vertex
 {
-	Vertex() : vec(5) {}
+	Vertex() {}
 	Vertex(int n) : vec(n) {}
 	Vertex(vector<double> &_vec) : vec(_vec) {}
 
 	vector<double> vec;
 
-	Vertex operator+ (Vertex &_vec) 
+	Vertex operator+ (Vertex &_vec)
 	{
 		auto v(vec);
 		for (auto i = 0; i < v.size(); i++)
@@ -26,7 +26,7 @@ struct Vertex
 		return Vertex(v);
 	}
 
-	Vertex operator- (Vertex &_vec) 
+	Vertex operator- (Vertex &_vec)
 	{
 		auto v(vec);
 		for (auto i = 0; i < v.size(); i++)
@@ -42,7 +42,7 @@ struct Vertex
 		return res;
 	}
 
-	Vertex operator* (double c) 
+	Vertex operator* (double c)
 	{
 		auto _v(vec);
 		for (auto &v : _v)
@@ -83,8 +83,8 @@ struct Vertex
 	{
 		ostream_.setf(ios::scientific);
 		ostream_.precision(16);
-		ostream_ << "[ " ;
-		for(auto x : v.vec)
+		ostream_ << "[ ";
+		for (auto x : v.vec)
 			ostream_ << x << ", ";
 		ostream_ << " ]";
 		return ostream_;

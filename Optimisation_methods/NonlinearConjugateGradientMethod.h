@@ -7,9 +7,9 @@ class NonlinearConjugateGradientMethod : Solver
 public:
 	NonlinearConjugateGradientMethod(string filename) : Solver(filename) {};
 	NonlinearConjugateGradientMethod() : Solver() {};
-	~NonlinearConjugateGradientMethod();
+	~NonlinearConjugateGradientMethod(){};
 
-	Vertex NCGM(func _f, Vertex _x);
+	Vertex Calc(func _f, Vertex _x);
 
 private:
 	Vertex x1;

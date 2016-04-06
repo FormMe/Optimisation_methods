@@ -3,7 +3,7 @@
 Solver::Solver(string filename)
 {
 	ifstream fin(filename);
-	fin >> eps >> M >> h >> h1;
+	fin >> eps >> h >> h1 >> M;
 
 }
 

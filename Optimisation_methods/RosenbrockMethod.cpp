@@ -1,15 +1,6 @@
 #include "RosenbrockMethod.h"
 
 
-RosenbrockMethod::RosenbrockMethod()
-{
-}
-
-
-RosenbrockMethod::~RosenbrockMethod()
-{
-}
-
 Vertex RosenbrockMethod::RM(func _f,  Vertex &v)
 {
 	N = v.vec.size();

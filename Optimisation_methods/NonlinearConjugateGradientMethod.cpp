@@ -1,17 +1,7 @@
 #include "NonlinearConjugateGradientMethod.h"
 
 
-
-NonlinearConjugateGradientMethod::NonlinearConjugateGradientMethod()
-{
-}
-
-
-NonlinearConjugateGradientMethod::~NonlinearConjugateGradientMethod()
-{
-}
-
-Vertex NonlinearConjugateGradientMethod::NCGM(func _f, Vertex _x)
+Vertex NonlinearConjugateGradientMethod::Calc(func _f, Vertex _x)
 {
 	eps = 1e-8; h = 1e-8;
 	f = _f; x = _x; N = x.vec.size();

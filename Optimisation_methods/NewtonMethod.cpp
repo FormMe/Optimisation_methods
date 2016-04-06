@@ -1,13 +1,5 @@
 #include "NewtonMethod.h"
 
-NewtonMethod::NewtonMethod() : Solver()
-{
-}
-
-NewtonMethod::~NewtonMethod()
-{
-}
-
 Vertex NewtonMethod::Calc(func _f, Vertex &_x)
 {
 	f = _f; x = _x; N = x.vec.size();
@@ -21,12 +13,12 @@ Vertex NewtonMethod::Calc(func _f, Vertex &_x)
 		{
 			S = grad*H;
 			lambda = GSS(x, S);
-			x = x - S*lambda;
+			x = x + S*lambda;
 		}
 		else
 		{
 			lambda = GSS(x, grad);
-			x = x - grad*lambda;
+			x = x + grad*lambda;
 		}
 		Grad();
 	}
@@ -40,7 +32,7 @@ void NewtonMethod::Grad()
 	for (auto i = 0; i < N; i++)
 	{
 		x1 = x; x1.vec[i] += h1;
-		grad.vec[i] = (f(x1.vec) - fx) / h1;
+		grad.vec[i] = -(f(x1.vec) - fx) / h1;
 	}
 }
 
