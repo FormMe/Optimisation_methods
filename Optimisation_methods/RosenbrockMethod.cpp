@@ -10,14 +10,15 @@ RosenbrockMethod::~RosenbrockMethod()
 {
 }
 
-void RosenbrockMethod::RM(func _f, int n, Vertex &v)
+Vertex RosenbrockMethod::RM(func _f,  Vertex &v)
 {
-	N = n;
+	N = v.vec.size();
 	S = vector<Vertex>(N, Vertex(N));
 	x = Vertex(N);
 	//x = v;
 	for (int i = 0; i < N; i++)
 		S[i].vec[i] = 1;
 
-	
+
+	return {};
 }

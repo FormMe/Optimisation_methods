@@ -1,6 +1,6 @@
 #include "NewtonMethod.h"
 
-NewtonMethod::NewtonMethod() : eps(1e-15), h(1), h1(1e-8)
+NewtonMethod::NewtonMethod() : Solver()
 {
 }
 
@@ -8,7 +8,7 @@ NewtonMethod::~NewtonMethod()
 {
 }
 
-Vertex NewtonMethod::NM(func _f, Vertex &_x)
+Vertex NewtonMethod::Calc(func _f, Vertex &_x)
 {
 	f = _f; x = _x; N = x.vec.size();
 	Init();
@@ -19,13 +19,13 @@ Vertex NewtonMethod::NM(func _f, Vertex &_x)
 		Inversion();
 		if (_eigenvalues.FindEigenvalues(H1))
 		{
-			d = grad*H;
-			lambda = _gss.GSS(x, d);
-			x = x - d*lambda;
+			S = grad*H;
+			lambda = GSS(x, S);
+			x = x - S*lambda;
 		}
 		else
 		{
-			lambda = _gss.GSS(x, grad);
+			lambda = GSS(x, grad);
 			x = x - grad*lambda;
 		}
 		Grad();
@@ -54,7 +54,10 @@ void NewtonMethod::Hessian()
 			x1 = x2 = x3 = x;
 			x1.vec[i] += h;		x1.vec[j] += h;
 			x2.vec[i] += h;		x3.vec[j] += h;
-			H[i][j] = (f(x1.vec) - f(x2.vec) - f(x3.vec) + fx) / (h*h);
+			auto f1 = f(x1.vec);
+			auto f2 = f(x2.vec);
+			auto f3 = f(x3.vec);
+			H[i][j] = (f1 - f2 - f3 + fx) / (h*h);
 		}
 	}
 }
@@ -98,12 +101,11 @@ void NewtonMethod::Inversion()
 
 void NewtonMethod::Init()
 {
-	_gss = GoldenSectionSearch(f, eps);
 	x1 = Vertex(N);
 	x2 = Vertex(N);
 	x3 = Vertex(N);
 	grad = Vertex(N);
-	d = Vertex(N);
+	S = Vertex(N);
 	H = vector<vector<double>>(N, vector<double>(N));
 	H1 = vector<vector<double>>(N, vector<double>(N));
 }

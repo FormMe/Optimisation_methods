@@ -1,28 +1,23 @@
 #pragma once
 #include "Vertex.h"
-#include "GoldenSectionSearch.h"
+#include "Solver.h"
 
-class NonlinearConjugateGradientMethod
+class NonlinearConjugateGradientMethod : Solver
 {
 public:
-	NonlinearConjugateGradientMethod();
+	NonlinearConjugateGradientMethod(string filename) : Solver(filename) {};
+	NonlinearConjugateGradientMethod() : Solver() {};
 	~NonlinearConjugateGradientMethod();
 
 	Vertex NCGM(func _f, Vertex _x);
 
 private:
-	GoldenSectionSearch _gss;
-	func f;
-	Vertex x;
 	Vertex x1;
 	Vertex grad;
 	Vertex grad1;
 	Vertex S;
 	double lambda;
 	double w;
-	double eps;
-	double h;
-	int N;
 
 	void Grad();
 	void PolakRibiere();

@@ -14,7 +14,6 @@ NonlinearConjugateGradientMethod::~NonlinearConjugateGradientMethod()
 Vertex NonlinearConjugateGradientMethod::NCGM(func _f, Vertex _x)
 {
 	eps = 1e-8; h = 1e-8;
-	_gss = GoldenSectionSearch(_f, eps);
 	f = _f; x = _x; N = x.vec.size();
 	x = Vertex(N);
 	x1 = Vertex(N);
@@ -25,9 +24,9 @@ Vertex NonlinearConjugateGradientMethod::NCGM(func _f, Vertex _x)
 	S = grad;
 	while (S.norm() > eps)
 	{
-		lambda = _gss.GSS(x, S);
+		lambda = GSS(x, S);
 		x = x + S*lambda;
-		PolakRibiere();
+		FletcherReeves();
 		S = grad + S*w;
 	}
 	return x;

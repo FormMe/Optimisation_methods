@@ -1,20 +1,23 @@
 #pragma once
-#include "Vertex.h"
+#include "Solver.h"
 
-
-class RosenbrockMethod
+class RosenbrockMethod : Solver
 {
 public:
-	RosenbrockMethod();
+	RosenbrockMethod(string filename) : Solver(filename) {};
+	RosenbrockMethod() : Solver(){};
 	~RosenbrockMethod();
+	Vertex RM(func _f, Vertex &v);
 
-	func f;
-	int N;
-	Vertex x;
-	double eps;
+private:
+	Vertex x1;
 	vector<Vertex> S;
-	double lambda;
+	vector<Vertex> A;
+	vector<double> lambda;
 
-	void RM(func _f, int n, Vertex &v);
+	void FindDirectios();
+	void GramSchmidtProcess();
+	void PalmerProcess();
+
 };
 

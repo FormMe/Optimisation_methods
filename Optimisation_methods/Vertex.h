@@ -9,7 +9,6 @@
 using namespace std;
 
 typedef  function<double(vector<double>)> func;
-typedef  function<double(double)> func2;
 
 struct Vertex
 {
@@ -50,6 +49,15 @@ struct Vertex
 			v *= c;
 		return Vertex(_v);
 	}
+
+	Vertex operator/ (double c)
+	{
+		auto _v(vec);
+		for (auto &v : _v)
+			v /= c;
+		return Vertex(_v);
+	}
+
 
 	Vertex operator* (vector<vector<double>> M)
 	{
