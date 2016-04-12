@@ -1,15 +1,79 @@
 #include "RosenbrockMethod.h"
 
-
-Vertex RosenbrockMethod::RM(func _f,  Vertex &v)
+Vertex RosenbrockMethod::Calc(func _f, Vertex &_x)
 {
-	N = v.vec.size();
+	f = _f; x = _x; N = x.vec.size();
 	S = vector<Vertex>(N, Vertex(N));
-	x = Vertex(N);
-	//x = v;
-	for (int i = 0; i < N; i++)
-		S[i].vec[i] = 1;
+	A = vector<Vertex>(N, Vertex(N));
+	x1 = Vertex(N);
+	lambda = vector<double>(N);
+	for (auto i = 0; i < N; i++)	S[i].vec[i] = 1;
 
+	for (auto i = 0; i < M; i++)
+	{
+		auto prevX = x;
+		MinDirections();
+		FindDirectios();
+		GramSchmidtProcess();
+		auto f = true;
+		for (auto j = 0; j < N && f; j++)
+			f = f * fabs(x.vec[0] - prevX.vec[0]) <= eps;
+		if (f) 
+			break;
+	}
+	return x;
+}
 
-	return {};
+void RosenbrockMethod::MinDirections()
+{
+	for (auto j = 0; j < N; j++)
+	{
+		lambda[j] = GSS(x, S[j]);
+		x = x + S[j] * lambda[j];
+	}
+}
+
+void RosenbrockMethod::FindDirectios()
+{
+	auto ind = vector<int>(N);
+	for (auto k = 0; k < N; k++) ind[k] = k;
+	sort(ind.begin(), ind.end(), [&](const int l, const int r) {return abs(lambda[l]) > abs(lambda[r]); });
+
+	for (auto j = N - 1; j >= 0; --j)
+	{
+		auto indx = ind[j];
+		for (auto m = j; m >= 0; --m)
+		{
+			A[m] = S[indx] * lambda[indx];
+		}
+	}
+}
+
+void RosenbrockMethod::GramSchmidtProcess()
+{
+	S[0] = A[0] / A[0].norm();
+	for (auto l = 1; l < N; l++)
+	{
+		auto B = A[l];
+		for (auto m = 0; m < l; m++)
+		{
+			B = B - S[m] * (A[l] * S[m]);
+		}
+		auto norm = B.norm();
+		if (norm > eps)
+			S[l] = B / B.norm();
+	}
+}
+
+void RosenbrockMethod::PalmerProcess()
+{
+	S[0] = A[0] / A[0].norm();
+	for (auto l = 1; l < N; l++)
+	{
+		auto norm = A[l].norm();
+		auto norm1 = A[l - 1].norm();
+		auto z = norm*norm1*sqrt(norm1*norm1 - norm*norm);
+		if (z > eps*eps)
+			S[l] = (A[l] * norm1*norm1 - A[l - 1] * norm*norm) / z;
+	}
 }

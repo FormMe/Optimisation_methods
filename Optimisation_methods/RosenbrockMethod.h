@@ -6,8 +6,8 @@ class RosenbrockMethod : Solver
 public:
 	RosenbrockMethod(string filename) : Solver(filename) {};
 	RosenbrockMethod() : Solver(){};
-	~RosenbrockMethod();
-	Vertex RM(func _f, Vertex &v);
+	~RosenbrockMethod(){};
+	virtual Vertex Calc(func _f, Vertex &_x);
 
 private:
 	Vertex x1;
@@ -15,6 +15,7 @@ private:
 	vector<Vertex> A;
 	vector<double> lambda;
 
+	void MinDirections();
 	void FindDirectios();
 	void GramSchmidtProcess();
 	void PalmerProcess();

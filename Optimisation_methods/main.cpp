@@ -1,6 +1,6 @@
 #include "NewtonMethod.h"
 #include  "NonlinearConjugateGradientMethod.h"
-
+#include "RosenbrockMethod.h"
 
 int main()
 {
@@ -14,9 +14,10 @@ int main()
 
 	NewtonMethod newton("input.txt");
 	NonlinearConjugateGradientMethod cgm("input.txt");
+	RosenbrockMethod ros("input.txt");
 
-	Vertex v(vector<double>{ 10, 10 });
-	auto res = cgm.Calc(f2, v);
-	cout << res << endl << "f = " << f2(res.vec) << endl;
+	Vertex v(vector<double>{ -10, 10});
+	auto res = ros.Calc(f, v);
+	cout << res << endl << "f = " << f(res.vec) << endl;
 	system("pause");
 }
