@@ -3,7 +3,7 @@
 Solver::Solver(string filename)
 {
 	ifstream fin(filename);
-	fin >> eps >> h >> h1 >> M;
+	fin >> eps >> eps1 >> l >> lStep >> h >> h1 >> M;
 
 }
 
@@ -28,12 +28,13 @@ pair<double, double> Solver::FindInterval(double lambda0, double d, Vertex &_x, 
 
 double Solver::GSS(Vertex &_x, Vertex &_S)
 {
-	auto interval = FindInterval(0, 0.05, _x, _S);
+	auto interval = FindInterval(l, lStep, _x, _S);
 	auto l1 = interval.first + 0.381966011*(interval.second - interval.first);
 	auto l2 = interval.second - 0.381966011*(interval.second - interval.first);
 	auto f_l1 = f((_x + _S*l1).vec);
 	auto f_l2 = f((_x + _S*l2).vec);
-	while (abs(interval.second - interval.first) > eps)
+
+	for (auto i = 0; i < M1 && abs(interval.second - interval.first) > eps1; i++)
 		if (f_l1 < f_l2)
 		{
 			interval.second = l2;
@@ -50,6 +51,7 @@ double Solver::GSS(Vertex &_x, Vertex &_S)
 			l2 = interval.second - 0.381966011*(interval.second - interval.first);
 			f_l2 = f((_x + _S*l2).vec);
 		}
+
 	return (interval.first + interval.second) / 2;
 }
 

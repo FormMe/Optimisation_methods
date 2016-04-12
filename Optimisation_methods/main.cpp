@@ -16,7 +16,7 @@ int main()
 	NonlinearConjugateGradientMethod cgm("input.txt");
 
 	Vertex v(vector<double>{ 10, 10 });
-	auto res = newton.Calc(f, v);
-	cout << res << endl << "f = " << f(res.vec) << endl;
+	auto res = cgm.Calc(f2, v);
+	cout << res << endl << "f = " << f2(res.vec) << endl;
 	system("pause");
 }

@@ -4,13 +4,12 @@
 Vertex NonlinearConjugateGradientMethod::Calc(func _f, Vertex _x)
 {
 	f = _f; x = _x; N = x.vec.size();
-	x = Vertex(N);
 	x1 = Vertex(N);
 	grad = Vertex(N);
 	grad1 = Vertex(N);
 	Grad();
 	S = grad;
-	while (S.norm() > eps)
+	for (auto i = 0; i < M && S.norm() > eps; i++)
 	{
 		lambda = GSS(x, S);
 		x = x + S*lambda;
@@ -32,9 +31,12 @@ void NonlinearConjugateGradientMethod::Grad()
 
 void NonlinearConjugateGradientMethod::PolakRibiere()
 {
+	//grad1 = grad;
+	//Grad();
+	//w = grad*(grad - grad1) / (grad1*S);
 	grad1 = grad;
 	Grad();
-	w = grad*(grad - grad1) / (grad1*S);
+	w = grad*(grad - grad1) / (grad1*grad1);
 }
 
 void NonlinearConjugateGradientMethod::FletcherReeves()
@@ -43,4 +45,8 @@ void NonlinearConjugateGradientMethod::FletcherReeves()
 	Grad();
 	auto gn1 = grad.norm();
 	w = (gn1*gn1) / (gn*gn);
+
+	//grad1 = grad;
+	//Grad();
+	//w = (grad*grad) / (grad1*grad1);
 }
