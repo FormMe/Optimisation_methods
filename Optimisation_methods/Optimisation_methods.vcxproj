@@ -110,7 +110,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="DownhillSimplexMethod.cpp" />
+    <ClCompile Include="BoksMethod.cpp" />
     <ClCompile Include="LU_eigenvalues.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="NewtonMethod.cpp" />
@@ -119,7 +119,7 @@
     <ClCompile Include="Solver.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DownhillSimplexMethod.h" />
+    <ClInclude Include="BoksMethod.h" />
     <ClInclude Include="LU_eigenvalues.h" />
     <ClInclude Include="NewtonMethod.h" />
     <ClInclude Include="NonlinearConjugateGradientMethod.h" />

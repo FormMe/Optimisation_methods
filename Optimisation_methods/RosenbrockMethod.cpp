@@ -18,7 +18,7 @@ Vertex RosenbrockMethod::Calc(func _f, Vertex &_x)
 		auto f = true;
 		for (auto j = 0; j < N && f; j++)
 			f = f * fabs(x.vec[0] - prevX.vec[0]) <= eps;
-		if (f) 
+		if (f)
 			break;
 	}
 	return x;
@@ -35,16 +35,19 @@ void RosenbrockMethod::MinDirections()
 
 void RosenbrockMethod::FindDirectios()
 {
-	auto ind = vector<int>(N);
-	for (auto k = 0; k < N; k++) ind[k] = k;
+	auto ind = vector<int>(N);	auto i = 0;
+	generate(ind.begin(), ind.end(), [&i]() {return i++; });
+	//for (auto k = 0; k < N; k++) ind[k] = k;
 	sort(ind.begin(), ind.end(), [&](const int l, const int r) {return abs(lambda[l]) > abs(lambda[r]); });
 
-	for (auto j = N - 1; j >= 0; --j)
+	for (auto j = 0; j < N; ++j)
 	{
-		auto indx = ind[j];
-		for (auto m = j; m >= 0; --m)
+		auto indx = ind[N - 1];
+		A[j] = S[indx] * lambda[indx];
+		for (auto m = j; m < N - 1; ++m)
 		{
-			A[m] = S[indx] * lambda[indx];
+			indx = ind[m];
+			A[j] = A[j] + S[indx] * lambda[indx];
 		}
 	}
 }

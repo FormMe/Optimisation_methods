@@ -79,6 +79,14 @@ struct Vertex
 		return sqrt(res);
 	}
 
+	double len(Vertex &ver)
+	{
+		double l = 0;
+		for (auto i = 0; i < vec.size(); i++)
+			l += (ver.vec[i] - vec[i])*(ver.vec[i] - vec[i]);
+		return sqrt(l);
+	}
+
 	friend ostream& operator << (ostream& ostream_, const Vertex& v)
 	{
 		ostream_.setf(ios::scientific);
