@@ -7,7 +7,7 @@ public:
 	NewtonMethod(ifstream &fin);
 	~NewtonMethod(){};
 
-	virtual Vertex Calc(func _f);
+	virtual Vertex Calc(func _f); ///sddssdssddsds
 
 protected:
 	Vertex x1;
@@ -18,7 +18,7 @@ protected:
 	vector<vector<double>> H1;
 	double lambda;
 
-	virtual void Hessian();
 	void Grad();
+	void Hessian();
 	void Inversion();
 };
