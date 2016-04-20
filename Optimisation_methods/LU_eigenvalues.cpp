@@ -1,7 +1,4 @@
 #include "LU_eigenvalues.h"
-LU_eigenvalues::LU_eigenvalues()
-{
-}
 LU_eigenvalues::~LU_eigenvalues()
 {
 }

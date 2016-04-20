@@ -5,10 +5,9 @@
 class Solver
 {
 public:
-	Solver(): eps(1e-12), eps1(1e-12), h(1e-10), h1(1e-10), M(10000), M1(1000), l(5), lStep(0.05) {};
-	Solver(string filename);
+	Solver(ifstream &fin);
 	virtual ~Solver() {};
-	virtual Vertex Calc(func _f, Vertex &_x) { return{}; };
+	virtual Vertex Calc(func _f) { return{}; };
 
 protected:
 	LU_eigenvalues _eigenvalues;
@@ -24,6 +23,7 @@ protected:
 	int N;
 	int M;
 	int M1;
+	int funcCnt;
 
 	double GSS(Vertex &_x, Vertex &_S);
 

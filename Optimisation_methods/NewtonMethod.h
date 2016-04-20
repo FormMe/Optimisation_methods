@@ -4,8 +4,7 @@
 class NewtonMethod: public Solver
 {
 public:
-	NewtonMethod(string filename) : Solver(filename) {};
-	NewtonMethod() : Solver() {};
+	NewtonMethod(ifstream &fin);
 	~NewtonMethod(){};
 
 	virtual Vertex Calc(func _f, Vertex &_x);

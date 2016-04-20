@@ -1,13 +1,17 @@
 #include "RosenbrockMethod.h"
 
+RosenbrockMethod::RosenbrockMethod(ifstream& fin) :
+	Solver(fin),
+	S(vector<Vertex>(N, Vertex(N))),
+	A(vector<Vertex>(N, Vertex(N))),
+	x1(Vertex(N)),
+	lambda(vector<double>(N)) {}
+
 Vertex RosenbrockMethod::Calc(func _f, Vertex &_x)
 {
-	f = _f; x = _x; N = x.vec.size();
-	S = vector<Vertex>(N, Vertex(N));
-	A = vector<Vertex>(N, Vertex(N));
-	x1 = Vertex(N);
-	lambda = vector<double>(N);
-	for (auto i = 0; i < N; i++)	S[i].vec[i] = 1;
+	f = _f;
+	for (auto i = 0; i < N; i++)	
+		S[i].vec[i] = 1;
 
 	for (auto i = 0; i < M; i++)
 	{

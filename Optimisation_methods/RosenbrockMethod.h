@@ -4,10 +4,9 @@
 class RosenbrockMethod : public Solver
 {
 public:
-	RosenbrockMethod(string filename) : Solver(filename) {};
-	RosenbrockMethod() : Solver(){};
+	RosenbrockMethod(ifstream &fin);
 	~RosenbrockMethod(){};
-	virtual Vertex Calc(func _f, Vertex &_x);
+	Vertex Calc(func _f, Vertex &_x);
 
 private:
 	Vertex x1;

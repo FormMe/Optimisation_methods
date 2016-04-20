@@ -5,11 +5,10 @@
 class NonlinearConjugateGradientMethod : public Solver
 {
 public:
-	NonlinearConjugateGradientMethod(string filename) : Solver(filename) {};
-	NonlinearConjugateGradientMethod() : Solver() {};
+	NonlinearConjugateGradientMethod(ifstream &fin) ;
 	~NonlinearConjugateGradientMethod(){};
 
-	Vertex Calc(func _f, Vertex _x);
+	virtual Vertex Calc(func _f);
 
 private:
 	Vertex x1;

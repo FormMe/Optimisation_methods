@@ -5,11 +5,10 @@
 class BoksMethod : Solver
 {
 public:
-	BoksMethod(string filename) : Solver(filename) {};
-	BoksMethod() : Solver() {};
+	BoksMethod(ifstream &fin);
 	~BoksMethod() {};
 
-	Vertex Calc(func _f, Vertex &v, Vertex &L, Vertex &R, double alpha);
+	Vertex Calc(func _f);
 
 private:
 	int K;
@@ -17,12 +16,13 @@ private:
 	vector<double> F;
 
 	int max_ind;
+	double alpha;
 	
 	Vertex L;
 	Vertex R;
 	Vertex average;
 	
-	void Initialization(Vertex &v);
+	void InitCmplx();
 	void Average();
 	bool QuitCase();
 	void CorrectVertex(Vertex &v);

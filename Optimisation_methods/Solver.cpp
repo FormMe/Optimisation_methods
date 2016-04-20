@@ -1,10 +1,13 @@
 #include "Solver.h"
 
-Solver::Solver(string filename)
+Solver::Solver(ifstream &fin) : funcCnt(0)
 {
-	ifstream fin(filename);
-	fin >> eps >> eps1 >> l >> lStep >> h >> h1 >> M;
-
+	fin >> eps >> eps1 >> l >> lStep >> h >> h1 >> M >> M1 >> N;
+	_eigenvalues = LU_eigenvalues(eps);
+	x = Vertex(N);
+	S = Vertex(N);
+	for (auto i = 0; i < N; ++i)
+		fin >> x.vec[i];
 }
 
 

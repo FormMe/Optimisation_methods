@@ -1,12 +1,16 @@
 #include "NonlinearConjugateGradientMethod.h"
 
 
-Vertex NonlinearConjugateGradientMethod::Calc(func _f, Vertex _x)
+NonlinearConjugateGradientMethod::NonlinearConjugateGradientMethod(ifstream& fin) :
+	Solver(fin),
+	x1(Vertex(N)),
+	grad(Vertex(N)),
+	grad1(Vertex(N)),
+	S(Vertex(N)) {}
+
+Vertex NonlinearConjugateGradientMethod::Calc(func _f)
 {
-	f = _f; x = _x; N = x.vec.size();
-	x1 = Vertex(N);
-	grad = Vertex(N);
-	grad1 = Vertex(N);
+	f = _f;
 	Grad();
 	S = grad;
 	for (auto i = 0; i < M && S.norm() > eps; i++)
@@ -31,9 +35,6 @@ void NonlinearConjugateGradientMethod::Grad()
 
 void NonlinearConjugateGradientMethod::PolakRibiere()
 {
-	//grad1 = grad;
-	//Grad();
-	//w = grad*(grad - grad1) / (grad1*S);
 	grad1 = grad;
 	Grad();
 	w = grad*(grad - grad1) / (grad1*grad1);
@@ -45,8 +46,4 @@ void NonlinearConjugateGradientMethod::FletcherReeves()
 	Grad();
 	auto gn1 = grad.norm();
 	w = (gn1*gn1) / (gn*gn);
-
-	//grad1 = grad;
-	//Grad();
-	//w = (grad*grad) / (grad1*grad1);
 }

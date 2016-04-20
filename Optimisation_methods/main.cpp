@@ -13,13 +13,13 @@ int main()
 		+ 5 * (vec[1] - vec[0])*(vec[1] - vec[0]); };
 
 
-	Solver *s = new RosenbrockMethod("input.txt");
+	ifstream fin("input.txt");
+	Solver *s = new RosenbrockMethod(fin);
 	
-	Vertex v(vector<double>{ 100, -10});
 	Vertex l(vector<double>{ 0.5, 0});
 	Vertex r(vector<double>{ 1.5, 1.5});
 
-	auto res = s->Calc(f, v);
+	auto res = s->Calc(f);
 	cout << res << endl << "f = " << f(res.vec) << endl << '\a';
 	system("pause");
 }

@@ -1,11 +1,19 @@
 #include "NewtonMethod.h"
 
+NewtonMethod::NewtonMethod(ifstream& fin) :
+	Solver(fin),
+	x1(Vertex(N)),
+	x2(Vertex(N)),
+	x3(Vertex(N)),
+	grad(Vertex(N)),
+	H(vector<vector<double>>(N, vector<double>(N))),
+	H1(vector<vector<double>>(N, vector<double>(N))) {}
+
 Vertex NewtonMethod::Calc(func _f, Vertex &_x)
 {
-	f = _f; x = _x; N = x.vec.size();
-	Init();
+	f = _f;
 	Grad();
-	while (grad.norm() > eps) //разобраться с минусами
+	for (auto i = 0; i < M && grad.norm() > eps; i++)
 	{
 		Hessian();
 		Inversion();
@@ -91,13 +99,3 @@ void NewtonMethod::Inversion()
 	H = H1;
 }
 
-void NewtonMethod::Init()
-{
-	x1 = Vertex(N);
-	x2 = Vertex(N);
-	x3 = Vertex(N);
-	grad = Vertex(N);
-	S = Vertex(N);
-	H = vector<vector<double>>(N, vector<double>(N));
-	H1 = vector<vector<double>>(N, vector<double>(N));
-}
