@@ -1,7 +1,7 @@
 #pragma once
 #include "Solver.h"
 
-class RosenbrockMethod : Solver
+class RosenbrockMethod : public Solver
 {
 public:
 	RosenbrockMethod(string filename) : Solver(filename) {};

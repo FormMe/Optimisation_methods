@@ -2,7 +2,7 @@
 #include "Vertex.h"
 #include "Solver.h"
 
-class NonlinearConjugateGradientMethod : Solver
+class NonlinearConjugateGradientMethod : public Solver
 {
 public:
 	NonlinearConjugateGradientMethod(string filename) : Solver(filename) {};

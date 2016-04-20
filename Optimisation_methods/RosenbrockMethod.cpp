@@ -14,10 +14,10 @@ Vertex RosenbrockMethod::Calc(func _f, Vertex &_x)
 		auto prevX = x;
 		MinDirections();
 		FindDirectios();
-		GramSchmidtProcess();
+		PalmerProcess();
 		auto f = true;
 		for (auto j = 0; j < N && f; j++)
-			f = f * fabs(x.vec[0] - prevX.vec[0]) <= eps;
+			f = fabs(x.vec[0] - prevX.vec[0]) <= eps;
 		if (f)
 			break;
 	}
@@ -35,9 +35,8 @@ void RosenbrockMethod::MinDirections()
 
 void RosenbrockMethod::FindDirectios()
 {
-	auto ind = vector<int>(N);	auto i = 0;
-	generate(ind.begin(), ind.end(), [&i]() {return i++; });
-	//for (auto k = 0; k < N; k++) ind[k] = k;
+	auto ind = vector<int>(N);
+	for (auto k = 0; k < N; k++) ind[k] = k;
 	sort(ind.begin(), ind.end(), [&](const int l, const int r) {return abs(lambda[l]) > abs(lambda[r]); });
 
 	for (auto j = 0; j < N; ++j)
@@ -64,7 +63,7 @@ void RosenbrockMethod::GramSchmidtProcess()
 		}
 		auto norm = B.norm();
 		if (norm > eps)
-			S[l] = B / B.norm();
+			S[l] = B / norm;
 	}
 }
 
