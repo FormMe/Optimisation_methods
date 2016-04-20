@@ -111,6 +111,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BoksMethod.cpp" />
+    <ClCompile Include="LevenbergMarquardtMethod.cpp" />
     <ClCompile Include="LU_eigenvalues.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="NewtonMethod.cpp" />
@@ -120,6 +121,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BoksMethod.h" />
+    <ClInclude Include="LevenbergMarquardtMethod.h" />
     <ClInclude Include="LU_eigenvalues.h" />
     <ClInclude Include="NewtonMethod.h" />
     <ClInclude Include="NonlinearConjugateGradientMethod.h" />

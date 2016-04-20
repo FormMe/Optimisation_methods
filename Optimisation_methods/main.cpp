@@ -2,6 +2,7 @@
 #include  "NonlinearConjugateGradientMethod.h"
 #include "RosenbrockMethod.h"
 #include "BoksMethod.h"
+#include "LevenbergMarquardtMethod.h"
 
 int main()
 {
@@ -14,7 +15,7 @@ int main()
 
 
 	ifstream fin("input.txt");
-	Solver *s = new RosenbrockMethod(fin);
+	Solver *s = new LevenbergMarquardtMethod(fin);
 	
 	auto res = s->Calc(f);
 	cout << res << endl << "f = " << f(res.vec) << endl << '\a';

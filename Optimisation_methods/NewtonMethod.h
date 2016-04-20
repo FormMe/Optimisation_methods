@@ -9,7 +9,7 @@ public:
 
 	virtual Vertex Calc(func _f);
 
-private:
+protected:
 	Vertex x1;
 	Vertex x2;
 	Vertex x3;
@@ -18,8 +18,7 @@ private:
 	vector<vector<double>> H1;
 	double lambda;
 
+	virtual void Hessian();
 	void Grad();
-	void Hessian();
 	void Inversion();
-	void Init();
 };
