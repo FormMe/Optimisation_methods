@@ -7,7 +7,7 @@ public:
 	NewtonMethod(ifstream &fin);
 	~NewtonMethod(){};
 
-	virtual Vertex Calc(func _f, Vertex &_x);
+	virtual Vertex Calc(func _f);
 
 private:
 	Vertex x1;

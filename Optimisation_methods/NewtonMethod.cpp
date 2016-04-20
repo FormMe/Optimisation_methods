@@ -9,7 +9,7 @@ NewtonMethod::NewtonMethod(ifstream& fin) :
 	H(vector<vector<double>>(N, vector<double>(N))),
 	H1(vector<vector<double>>(N, vector<double>(N))) {}
 
-Vertex NewtonMethod::Calc(func _f, Vertex &_x)
+Vertex NewtonMethod::Calc(func _f)
 {
 	f = _f;
 	Grad();

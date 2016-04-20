@@ -7,7 +7,7 @@ RosenbrockMethod::RosenbrockMethod(ifstream& fin) :
 	x1(Vertex(N)),
 	lambda(vector<double>(N)) {}
 
-Vertex RosenbrockMethod::Calc(func _f, Vertex &_x)
+Vertex RosenbrockMethod::Calc(func _f)
 {
 	f = _f;
 	for (auto i = 0; i < N; i++)	
