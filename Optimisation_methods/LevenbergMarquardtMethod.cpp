@@ -12,7 +12,7 @@ Vertex LevenbergMarquardtMethod::Calc(func _f)
 	Grad();
 	for (auto i = 0; i < M && grad.norm() > eps; i++)
 	{
-		auto prevX = x;
+		prevX = x;
 		auto prevF = f(prevX.vec);
 		bool flag;
 		Hessian();

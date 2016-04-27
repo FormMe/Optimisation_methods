@@ -15,7 +15,7 @@ Vertex RosenbrockMethod::Calc(func _f)
 
 	for (auto i = 0; i < M; i++)
 	{
-		auto prevX = x;
+		prevX = x;
 		MinDirections();
 		FindDirectios();
 		PalmerProcess();

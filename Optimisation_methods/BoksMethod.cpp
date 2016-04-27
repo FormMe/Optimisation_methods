@@ -59,6 +59,7 @@ void BoksMethod::InitCmplx()
 
 void BoksMethod::Average()
 {
+	average = Vertex(N);
 	for (auto i = 0; i < K; i++)
 		if (i != max_ind)
 			average = average + cmplx[i];

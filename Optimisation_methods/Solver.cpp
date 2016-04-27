@@ -3,8 +3,9 @@
 Solver::Solver(ifstream &fin) : funcCnt(0)
 {
 	fin >> eps >> eps1 >> l >> lStep >> h >> h1 >> M >> M1 >> N;
-	_eigenvalues = LU_eigenvalues(eps);
+	_eigenvalues = LU_eigenvalues(min(eps,eps1));
 	x = Vertex(N);
+	prevX = Vertex(N);
 	S = Vertex(N);
 	for (auto i = 0; i < N; ++i)
 		fin >> x.vec[i];

@@ -42,6 +42,16 @@ struct Vertex
 		return res;
 	}
 
+	vector<vector<double>> TransMult(Vertex &_vec)
+	{
+		auto n = vec.size();
+		vector<vector<double>> res(n, vector<double>(n));
+		for (auto i = 0; i < n; i++)
+			for (auto j = 0; j < n; j++)
+				res[i][j] = vec[i] * _vec.vec[j];
+		return res;
+	}
+
 	Vertex operator* (double c)
 	{
 		auto _v(vec);
@@ -58,16 +68,23 @@ struct Vertex
 		return Vertex(_v);
 	}
 
-
-	Vertex operator* (vector<vector<double>> M)
+	Vertex operator* (vector<vector<double>> &M)
 	{
 		auto N = vec.size();
 		auto res = Vertex(N);
 		for (auto i = 0; i < N; ++i)
 			for (auto j = 0; j < N; j++)
-			{
-				res.vec[i] += vec[j] * M[i][j];
-			}
+				res.vec[i] += M[i][j] * vec[j];
+		return res;
+	}
+
+	Vertex TransMult(vector<vector<double>> &M)
+	{
+		auto N = vec.size();
+		auto res = Vertex(N);
+		for (auto i = 0; i < N; ++i)
+			for (auto j = 0; j < N; j++)
+				res.vec[i] += vec[j] * M[j][i];
 		return res;
 	}
 

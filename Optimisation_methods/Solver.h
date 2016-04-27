@@ -13,6 +13,7 @@ protected:
 	LU_eigenvalues _eigenvalues;
 	func f;
 	Vertex x;
+	Vertex prevX;
 	Vertex S;
 	double eps;
 	double eps1;

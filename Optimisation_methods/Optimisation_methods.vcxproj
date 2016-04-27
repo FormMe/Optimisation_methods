@@ -111,22 +111,32 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BoksMethod.cpp" />
+    <ClCompile Include="DavidonFletcherPowellMethod.cpp" />
+    <ClCompile Include="GoldfarbMethod.cpp" />
+    <ClCompile Include="GreenshtadtMethod.cpp" />
     <ClCompile Include="LevenbergMarquardtMethod.cpp" />
     <ClCompile Include="LU_eigenvalues.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="NewtonMethod.cpp" />
     <ClCompile Include="NonlinearConjugateGradientMethod.cpp" />
+    <ClCompile Include="QuasiNewtonMethod.cpp" />
     <ClCompile Include="RosenbrockMethod.cpp" />
     <ClCompile Include="Solver.cpp" />
+    <ClCompile Include="ThirdPearsonMethod.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BoksMethod.h" />
+    <ClInclude Include="DavidonFletcherPowellMethod.h" />
+    <ClInclude Include="GoldfarbMethod.h" />
+    <ClInclude Include="GreenshtadtMethod.h" />
     <ClInclude Include="LevenbergMarquardtMethod.h" />
     <ClInclude Include="LU_eigenvalues.h" />
     <ClInclude Include="NewtonMethod.h" />
     <ClInclude Include="NonlinearConjugateGradientMethod.h" />
+    <ClInclude Include="QuasiNewtonMethod.h" />
     <ClInclude Include="RosenbrockMethod.h" />
     <ClInclude Include="Solver.h" />
+    <ClInclude Include="ThirdPearsonMethod.h" />
     <ClInclude Include="Vertex.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
