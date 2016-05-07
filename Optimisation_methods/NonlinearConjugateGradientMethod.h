@@ -8,7 +8,7 @@ public:
 	NonlinearConjugateGradientMethod(ifstream &fin) ;
 	~NonlinearConjugateGradientMethod(){};
 
-	virtual Vertex Calc(func _f);
+	virtual Vertex Calc(func _f, const Vertex &_x);
 
 private:
 	Vertex x1;

@@ -7,7 +7,7 @@ public:
 	LevenbergMarquardtMethod(ifstream &fin);
 	~LevenbergMarquardtMethod();
 
-	virtual Vertex Calc(func _f);
+	virtual Vertex Calc(func _f, const Vertex &_x);
 
 private:
 	void WeightH();

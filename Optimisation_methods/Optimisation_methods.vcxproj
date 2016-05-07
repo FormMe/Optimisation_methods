@@ -119,6 +119,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="NewtonMethod.cpp" />
     <ClCompile Include="NonlinearConjugateGradientMethod.cpp" />
+    <ClCompile Include="PenaltyMethod.cpp" />
     <ClCompile Include="QuasiNewtonMethod.cpp" />
     <ClCompile Include="RosenbrockMethod.cpp" />
     <ClCompile Include="Solver.cpp" />
@@ -133,6 +134,7 @@
     <ClInclude Include="LU_eigenvalues.h" />
     <ClInclude Include="NewtonMethod.h" />
     <ClInclude Include="NonlinearConjugateGradientMethod.h" />
+    <ClInclude Include="PenaltyMethod.h" />
     <ClInclude Include="QuasiNewtonMethod.h" />
     <ClInclude Include="RosenbrockMethod.h" />
     <ClInclude Include="Solver.h" />

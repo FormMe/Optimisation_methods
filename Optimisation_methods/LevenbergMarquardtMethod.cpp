@@ -6,14 +6,16 @@ LevenbergMarquardtMethod::~LevenbergMarquardtMethod()
 {
 }
 
-Vertex LevenbergMarquardtMethod::Calc(func _f)
+Vertex LevenbergMarquardtMethod::Calc(func _f, const Vertex &_x)
 {
+	x = _x;
 	f = _f;
 	Grad();
 	for (auto i = 0; i < M && grad.norm() > eps; i++)
 	{
 		prevX = x;
 		auto prevF = f(prevX.vec);
+		++funcCnt;
 		bool flag;
 		Hessian();
 		auto Hf = H;
@@ -23,6 +25,7 @@ Vertex LevenbergMarquardtMethod::Calc(func _f)
 			Inversion();
 			x = prevX + grad*H;
 			flag = f(x.vec) < prevF;
+			++funcCnt;
 			if (flag) lambda /= 2;
 			else
 			{

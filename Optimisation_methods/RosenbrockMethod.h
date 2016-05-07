@@ -5,8 +5,7 @@ class RosenbrockMethod : public Solver
 {
 public:
 	RosenbrockMethod(ifstream &fin);
-	~RosenbrockMethod(){};
-	Vertex Calc(func _f);
+	Vertex Calc(func _f, const Vertex &_x);
 
 private:
 	Vertex x1;

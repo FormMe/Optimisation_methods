@@ -8,8 +8,9 @@ NonlinearConjugateGradientMethod::NonlinearConjugateGradientMethod(ifstream& fin
 	grad1(Vertex(N)),
 	S(Vertex(N)) {}
 
-Vertex NonlinearConjugateGradientMethod::Calc(func _f)
+Vertex NonlinearConjugateGradientMethod::Calc(func _f, const Vertex &_x)
 {
+	x = _x;
 	f = _f;
 	Grad();
 	S = grad;
@@ -26,10 +27,12 @@ Vertex NonlinearConjugateGradientMethod::Calc(func _f)
 void NonlinearConjugateGradientMethod::Grad()
 {
 	auto fx = f(x.vec);
+	++funcCnt;
 	for (auto i = 0; i < N; i++)
 	{
 		x1 = x; x1.vec[i] += h;
 		grad.vec[i] = -(f(x1.vec) - fx) / h;
+		++funcCnt;
 	}
 }
 

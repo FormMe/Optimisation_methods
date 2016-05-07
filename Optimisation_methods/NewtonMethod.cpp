@@ -9,8 +9,9 @@ NewtonMethod::NewtonMethod(ifstream& fin) :
 	H(vector<vector<double>>(N, vector<double>(N))),
 	H1(vector<vector<double>>(N, vector<double>(N))) {}
 
-Vertex NewtonMethod::Calc(func _f)
+Vertex NewtonMethod::Calc(func _f, const Vertex &_x)
 {
+	x = _x;
 	f = _f;
 	Grad();
 	for (auto i = 0; i < M && grad.norm() > eps; i++)
@@ -37,16 +38,19 @@ Vertex NewtonMethod::Calc(func _f)
 void NewtonMethod::Grad()
 {
 	auto fx = f(x.vec);
+	++funcCnt;
 	for (auto i = 0; i < N; i++)
 	{
 		x1 = x; x1.vec[i] += h;
 		grad.vec[i] = -(f(x1.vec) - fx) / h;
+		++funcCnt;
 	}
 }
 
 void NewtonMethod::Hessian()
 {
 	auto fx = f(x.vec);
+	++funcCnt;
 	for (auto i = 0; i < N; i++)
 	{
 		for (auto j = 0; j < N; j++)
@@ -58,6 +62,7 @@ void NewtonMethod::Hessian()
 			auto f2 = f(x2.vec);
 			auto f3 = f(x3.vec);
 			H[i][j] = (f1 - f2 - f3 + fx) / (h1*h1);
+			funcCnt += 3;
 		}
 	}
 }

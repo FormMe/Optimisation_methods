@@ -6,8 +6,9 @@ class Solver
 {
 public:
 	Solver(ifstream &fin);
-	virtual ~Solver() {};
-	virtual Vertex Calc(func _f) { return{}; };
+	virtual Vertex Calc(func _f, const Vertex &x) { return{}; };
+
+	int GetFuncCnt();
 
 protected:
 	LU_eigenvalues _eigenvalues;

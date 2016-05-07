@@ -1,8 +1,4 @@
 #include "LU_eigenvalues.h"
-LU_eigenvalues::~LU_eigenvalues()
-{
-}
-
 
 void LU_eigenvalues::Decomposition()
 {

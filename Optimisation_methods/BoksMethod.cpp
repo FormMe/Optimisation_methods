@@ -30,6 +30,7 @@ Vertex BoksMethod::Calc(func _f)
 		{
 			CorrectVertex(x);
 			auto fr = f(x.vec);
+			++funcCnt;
 			if (fr < F[max_ind])
 			{
 				cmplx[max_ind] = x;
@@ -55,6 +56,7 @@ void BoksMethod::InitCmplx()
 	generate(cmplx.begin() + 1, cmplx.end(), [&]() {return L + (R - L)* dis(gen); });
 	auto i = 1;
 	generate(F.begin() + 1, F.end(), [&]() {return f(cmplx[i++].vec); });
+	funcCnt += N - 1;
 }
 
 void BoksMethod::Average()
@@ -81,7 +83,12 @@ bool BoksMethod::QuitCase()
 {
 	auto ff = accumulate(F.begin(), F.end(), 0) / K;
 	auto d1 = sqrt(accumulate(F.begin(), F.end(), 0,
-		[&ff](double a, double b) {	return (a - ff)*(a - ff) + (b - ff)*(b - ff);	})) / (K - 1);
+				[&ff](double a, double b)
+				{
+					return (a - ff)*(a - ff) + (b - ff)*(b - ff);
+				})) 
+				/ (K - 1);
+
 	auto d2 = 0.0;
 	for (auto i = 0; i < K; i++)
 		for (auto j = i + 1; j < K; j++)

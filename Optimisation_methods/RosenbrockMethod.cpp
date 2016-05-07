@@ -7,13 +7,14 @@ RosenbrockMethod::RosenbrockMethod(ifstream& fin) :
 	x1(Vertex(N)),
 	lambda(vector<double>(N)) {}
 
-Vertex RosenbrockMethod::Calc(func _f)
+Vertex RosenbrockMethod::Calc(func _f, const Vertex &_x)
 {
+	x = _x;
 	f = _f;
 	for (auto i = 0; i < N; i++)	
 		S[i].vec[i] = 1;
-
-	for (auto i = 0; i < M; i++)
+	auto i = 0;
+	for ( i = 0; i < M; i++)
 	{
 		prevX = x;
 		MinDirections();

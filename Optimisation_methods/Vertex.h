@@ -14,7 +14,7 @@ struct Vertex
 {
 	Vertex() {}
 	Vertex(int n) : vec(n) {}
-	Vertex(vector<double> &_vec) : vec(_vec) {}
+	Vertex(const vector<double> &_vec) : vec(_vec) {}
 
 	vector<double> vec;
 
