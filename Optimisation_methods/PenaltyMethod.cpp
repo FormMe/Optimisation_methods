@@ -17,7 +17,7 @@ PenaltyMethod::PenaltyMethod(ifstream &fin, const func &_f, const vector<func> &
 Vertex PenaltyMethod::Calc()
 {
 	auto quit = false;
-	for (auto k = 0; k < M && !quit; k++, r /= C)
+	for (auto k = 0; k < M + 100 && !quit; k++, r /= C)
 	{
 		////רענאפû
 
@@ -39,11 +39,7 @@ Vertex PenaltyMethod::Calc()
 				[&vec](double a, const func &b)
 			{
 				auto lim = b(vec);
-				if (lim <= 0)
-					lim = 1 / lim;
-				else
-					lim = DBL_MAX / 1e10;
-				return a + lim;
+				return a + lim <= 0 ? 1 / lim : DBL_MAX;
 			});
 		};
 

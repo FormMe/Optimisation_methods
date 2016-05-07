@@ -27,6 +27,7 @@ protected:
 	int M1;
 	int funcCnt;
 
+	double Fibbonachi(Vertex &_x, Vertex &_S);
 	double GSS(Vertex &_x, Vertex &_S);
 
 private:

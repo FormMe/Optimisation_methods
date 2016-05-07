@@ -11,7 +11,7 @@
 
 int main()
 {
-	auto f = [](vector<double> vec)
+	auto f1 = [](vector<double> vec)
 	{
 		return (1 - vec[0])*(1 - vec[0])
 			+ 100 * (vec[1] - vec[0] * vec[0])*(vec[1] - vec[0] * vec[0]);
@@ -34,7 +34,7 @@ int main()
 		int c1 = 2, c2 = 1;
 		int d1 = 3, d2 = 2;
 
-		return -((A1 / (1 + pow(((vec[0] - a1) / b1), 2) + pow(((vec[1] - c1) / d1), 2))) 
+		return -((A1 / (1 + pow(((vec[0] - a1) / b1), 2) + pow(((vec[1] - c1) / d1), 2)))
 			+ (A2 / (1 + pow(((vec[0] - a2) / b2), 2) + pow(((vec[1] - c2) / d2), 2))));
 
 	};
@@ -49,14 +49,14 @@ int main()
 
 	ifstream fin("input.txt");
 	ifstream fin2("input_penalty.txt");
-	Solver *s = new RosenbrockMethod(fin);
+	Solver *s = new NonlinearConjugateGradientMethod(fin);
 
 	//auto x = Vertex(vector<double>{1.02535, 1.09424});
 	//auto res = s->Calc(f4, x);
 
-	PenaltyMethod pm(fin2, f4, g, s);
+	PenaltyMethod pm(fin2, f1, g, s);
 	auto res = pm.Calc();
 
-	cout << res << endl << "f = " << f4(res.vec) << endl << '\a';
+	cout << res << endl << "f = " << f1(res.vec) << endl << '\a';
 	system("pause");
 }
