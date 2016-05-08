@@ -16,7 +16,7 @@ Vertex NonlinearConjugateGradientMethod::Calc(func _f, const Vertex &_x)
 	S = grad;
 	for (auto i = 0; i < M && S.norm() > eps; i++)
 	{
-		lambda = GSS(x, S);
+		lambda = Fibbonachi(x, S);
 		x = x + S*lambda;
 		FletcherReeves();
 		S = grad + S*w;

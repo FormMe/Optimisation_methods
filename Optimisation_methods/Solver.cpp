@@ -13,40 +13,40 @@ pair<double, double> Solver::FindInterval(double lambda0, double d, Vertex &_x, 
 {
 	double lambda1, lambda2;
 	funcCnt += 2;
-	//auto f1 = f((_x + _S*lambda0).vec);
-	//auto f2 = f((_x + _S*(lambda0 + d)).vec);
-	//auto f3 = f((_x + _S*(lambda0 - d)).vec);
-	//lambda1 = lambda0;
+	auto f1 = f((_x + _S*lambda0).vec);
+	auto f2 = f((_x + _S*(lambda0 + d)).vec);
+	auto f3 = f((_x + _S*(lambda0 - d)).vec);
+	lambda1 = lambda0;
 
-	//if (f1 <= f2 && f1 > f3)	d = -d;
-	//else return make_pair(lambda0 - d, lambda0 + d);
+	if (f1 <= f2 && f1 > f3)	d = -d;
+	else return make_pair(lambda0 - d, lambda0 + d);
 
-	//lambda2 = lambda1 + d;
+	lambda2 = lambda1 + d;
 
-	//funcCnt += 2;
-	//while (f((_x + _S*lambda1).vec) > f((_x + _S*lambda2).vec))
-	//{
-	//	h *= 2;
-	//	lambda0 = lambda1;
-	//	lambda1 = lambda2;
-	//	lambda2 = lambda1 + h;
-	//	funcCnt += 2;
-	//}
-
-	if (f((_x + _S*lambda0).vec) < f((_x + _S*(lambda0 + d)).vec))
-		d = -d;
-
-	do
+	funcCnt += 2;
+	while (f((_x + _S*lambda1).vec) > f((_x + _S*lambda2).vec))
 	{
-		lambda1 = lambda0 + d;
-		d *= 2;
-		lambda2 = lambda1 + d;
+		h *= 2;
 		lambda0 = lambda1;
+		lambda1 = lambda2;
+		lambda2 = lambda1 + h;
 		funcCnt += 2;
+	}
 
-	} while (f((_x + _S*lambda1).vec) > f((_x + _S*lambda2).vec));
+	//if (f((_x + _S*lambda0).vec) < f((_x + _S*(lambda0 + d)).vec))
+	//	d = -d;
 
-	lambda0 -= d / 2;
+	//do
+	//{
+	//	lambda1 = lambda0 + d;
+	//	d *= 2;
+	//	lambda2 = lambda1 + d;
+	//	lambda0 = lambda1;
+	//	funcCnt += 2;
+
+	//} while (f((_x + _S*lambda1).vec) > f((_x + _S*lambda2).vec));
+
+	//lambda0 -= d / 2;
 	//пофиксить вылетание за границы
 	return make_pair(min(lambda0, lambda2), max(lambda0, lambda2));
 }
@@ -89,7 +89,7 @@ double Solver::Fibbonachi(Vertex& _x, Vertex& _S)
 {
 	auto s = FindInterval(l, lStep, _x, _S);
 	double f1, f2;
-	auto fib_max = (s.second - s.first) / eps1;
+	auto fib_max = (s.second - s.first) /eps1;
 	long long int add_fib = 0;
 	vector<long long int> fibs{ 1,1 };
 	auto n = 2;

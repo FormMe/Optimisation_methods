@@ -35,21 +35,28 @@ Vertex PenaltyMethod::Calc()
 
 		auto P = [&](vector<double> vec)
 		{
-			return  -r * accumulate(g.begin(), g.end(), 0.0,
+			auto sum = accumulate(g.begin(), g.end(), 0.0,
 				[&vec](double a, const func &b)
 			{
+				if (a == DBL_MAX) return a;
 				auto lim = b(vec);
-				return a + lim <= 0 ? 1 / lim : DBL_MAX;
+				return lim <= 0 ? (a + 1 / lim) : DBL_MAX;
 			});
+
+			return sum == DBL_MAX ? sum : -r * sum;
 		};
 
 		//auto P = [&](vector<double> vec)
 		//{
-		//	return  -r * accumulate(g.begin(), g.end(), 0.0,
+		//	auto sum = accumulate(g.begin(), g.end(), 0.0,
 		//		[&vec](double a, const func &b)
-		//		{
-		//			return a + log(-b(vec));
-		//		});
+		//	{
+		//		if (a == DBL_MAX) return a;
+		//		auto lim = b(vec);
+		//		return lim <= 0 ? (a + log(-lim)) : DBL_MAX;
+		//	});
+
+		//	return sum == DBL_MAX ? sum : -r * sum;
 		//};
 
 		auto F = [&](const vector<double> &vec)
