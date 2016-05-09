@@ -10,6 +10,6 @@ public:
 	virtual Vertex Calc(func _f, const Vertex &_x);
 
 private:
-	void WeightH();
+	void WeightH(double _lambda);
 };
 

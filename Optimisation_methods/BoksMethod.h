@@ -2,7 +2,7 @@
 #include "Solver.h"
 #include <random>
 
-class BoksMethod : Solver
+class BoksMethod : public Solver
 {
 public:
 	BoksMethod(ifstream &fin);

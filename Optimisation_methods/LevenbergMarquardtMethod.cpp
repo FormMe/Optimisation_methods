@@ -11,6 +11,7 @@ Vertex LevenbergMarquardtMethod::Calc(func _f, const Vertex &_x)
 	x = _x;
 	f = _f;
 	Grad();
+	auto _lambda = lambda;
 	for (auto i = 0; i < M && grad.norm() > eps; i++)
 	{
 		prevX = x;
@@ -21,15 +22,15 @@ Vertex LevenbergMarquardtMethod::Calc(func _f, const Vertex &_x)
 		auto Hf = H;
 		do
 		{
-			WeightH();
+			WeightH(_lambda);
 			Inversion();
 			x = prevX + grad*H;
-			flag = f(x.vec) < prevF;
+			flag = abs(f(x.vec) - prevF) < eps;
 			++funcCnt;
-			if (flag) lambda /= 2;
+			if (flag) _lambda /= 2;
 			else
 			{
-				lambda *= 2;
+				_lambda *= 2;
 				H = Hf;
 			}
 
@@ -39,8 +40,8 @@ Vertex LevenbergMarquardtMethod::Calc(func _f, const Vertex &_x)
 	return x;
 }
 
-void LevenbergMarquardtMethod::WeightH()
+void LevenbergMarquardtMethod::WeightH(double _lambda)
 {
 	for (auto i = 0; i < N; ++i)
-		H[i][i] += lambda;
+		H[i][i] += _lambda;
 }

@@ -33,7 +33,7 @@ void RosenbrockMethod::MinDirections()
 {
 	for (auto j = 0; j < N; j++)
 	{
-		lambda[j] = GSS(x, S[j]);
+		lambda[j] = Fibbonachi(x, S[j]);
 		x = x + S[j] * lambda[j];
 	}
 }

@@ -11,25 +11,20 @@ Solver::Solver(ifstream &fin) : funcCnt(0)
 
 pair<double, double> Solver::FindInterval(double lambda0, double d, Vertex &_x, Vertex &_S)
 {
-	double lambda1, lambda2;
+	auto lambda1 = lambda0, lambda2 = lambda1 + d;
 	funcCnt += 2;
-	auto f1 = f((_x + _S*lambda0).vec);
-	auto f2 = f((_x + _S*(lambda0 + d)).vec);
-	auto f3 = f((_x + _S*(lambda0 - d)).vec);
-	lambda1 = lambda0;
 
-	if (f1 <= f2 && f1 > f3)	d = -d;
-	else return make_pair(lambda0 - d, lambda0 + d);
+	if (f((_x + _S*lambda0).vec) < f((_x + _S*(lambda0 + d)).vec))
+		d = -d;
 
-	lambda2 = lambda1 + d;
 
 	funcCnt += 2;
 	while (f((_x + _S*lambda1).vec) > f((_x + _S*lambda2).vec))
 	{
-		h *= 2;
+		d *= 2;
 		lambda0 = lambda1;
 		lambda1 = lambda2;
-		lambda2 = lambda1 + h;
+		lambda2 = lambda1 + d;
 		funcCnt += 2;
 	}
 

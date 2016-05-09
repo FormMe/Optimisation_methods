@@ -21,12 +21,12 @@ Vertex NewtonMethod::Calc(func _f, const Vertex &_x)
 		if (_eigenvalues.FindEigenvalues(H1))
 		{
 			S = grad*H;
-			lambda = GSS(x, S);
+			lambda = Fibbonachi(x, S);
 			x = x + S*lambda;
 		}
 		else
 		{
-			lambda = GSS(x, grad);
+			lambda = Fibbonachi(x, grad);
 			x = x + grad*lambda;
 		}
 		Grad();

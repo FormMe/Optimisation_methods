@@ -19,7 +19,7 @@ private:
 
 public:
 	PenaltyMethod(ifstream &fin, const func &_f, const vector<func> &_g, Solver *_s);
-
+	int GetFuncCount();
 	Vertex Calc();
 };
 
