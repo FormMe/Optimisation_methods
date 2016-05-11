@@ -11,20 +11,18 @@ Vertex RosenbrockMethod::Calc(func _f, const Vertex &_x)
 {
 	x = _x;
 	f = _f;
+	auto f = false;
 	for (auto i = 0; i < N; i++)	
 		S[i].vec[i] = 1;
-	auto i = 0;
-	for ( i = 0; i < M; i++)
+	for (auto i = 0; i < M && !f; i++)
 	{
 		prevX = x;
 		MinDirections();
 		FindDirectios();
-		PalmerProcess();
-		auto f = true;
+		GramSchmidtProcess();
+		f = true;
 		for (auto j = 0; j < N && f; j++)
 			f = fabs(x.vec[0] - prevX.vec[0]) <= eps;
-		if (f)
-			break;
 	}
 	return x;
 }
@@ -33,7 +31,8 @@ void RosenbrockMethod::MinDirections()
 {
 	for (auto j = 0; j < N; j++)
 	{
-		lambda[j] = Fibbonachi(x, S[j]);
+		//слишком маламя лямбда не влияет на х
+		lambda[j] = GSS(x, S[j]);
 		x = x + S[j] * lambda[j];
 	}
 }

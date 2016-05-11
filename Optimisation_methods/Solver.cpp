@@ -130,5 +130,7 @@ double Solver::Fibbonachi(Vertex& _x, Vertex& _S)
 
 int Solver::GetFuncCnt()
 {
-	return funcCnt;
+	auto tmp = funcCnt;
+	funcCnt = 0;
+	return tmp;
 }

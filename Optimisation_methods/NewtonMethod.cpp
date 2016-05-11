@@ -53,7 +53,7 @@ void NewtonMethod::Hessian()
 	++funcCnt;
 	for (auto i = 0; i < N; i++)
 	{
-		for (auto j = 0; j < N; j++)
+		for (auto j = i; j < N; j++)
 		{
 			x1 = x2 = x3 = x;
 			x1.vec[i] += h1;		x1.vec[j] += h1;
@@ -61,7 +61,7 @@ void NewtonMethod::Hessian()
 			auto f1 = f(x1.vec);
 			auto f2 = f(x2.vec);
 			auto f3 = f(x3.vec);
-			H[i][j] = (f1 - f2 - f3 + fx) / (h1*h1);
+			H[i][j] = H[j][i] = (f1 - f2 - f3 + fx) / (h1*h1);
 			funcCnt += 3;
 		}
 	}

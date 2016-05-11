@@ -11,7 +11,7 @@ typedef vector<vector<double>> matrix;
 class LU_eigenvalues
 {
 public:
-	LU_eigenvalues(double _eps = 1e-8) : eps(_eps) {};
+	LU_eigenvalues(double _eps = 1e-5) : eps(_eps) {};
 
 	bool FindEigenvalues(matrix &M);
 

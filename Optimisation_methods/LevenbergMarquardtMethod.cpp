@@ -12,10 +12,11 @@ Vertex LevenbergMarquardtMethod::Calc(func _f, const Vertex &_x)
 	f = _f;
 	Grad();
 	auto _lambda = lambda;
-	for (auto i = 0; i < M && grad.norm() > eps; i++)
+	auto prevF = 0., nextF = 10.;
+	for (auto i = 0; i < M && (grad.norm() > eps || abs(nextF - prevF) < 1e-6); i++)
 	{
 		prevX = x;
-		auto prevF = f(prevX.vec);
+		prevF = f(prevX.vec);
 		++funcCnt;
 		bool flag;
 		Hessian();
@@ -25,7 +26,9 @@ Vertex LevenbergMarquardtMethod::Calc(func _f, const Vertex &_x)
 			WeightH(_lambda);
 			Inversion();
 			x = prevX + grad*H;
-			flag = abs(f(x.vec) - prevF) < eps;
+			nextF = f(x.vec);
+			//лямбда вылетает в бесконечность в случаях с малой разницей функций
+			flag = nextF < prevF || abs(nextF - prevF) < 1e-6;
 			++funcCnt;
 			if (flag) _lambda /= 2;
 			else
