@@ -5,8 +5,6 @@ BoksMethod::BoksMethod(ifstream& fin) :
 	Solver(fin),
 	cmplx(vector<Vertex>(K)),
 	F(vector<double>(K)),
-	L(Vertex(N)),
-	R(Vertex(N)),
 	average(Vertex(N)),
 	K(2*N)
 {
@@ -68,16 +66,6 @@ void BoksMethod::Average()
 	average = average / (K - 1);
 
 }
-
-void BoksMethod::CorrectVertex(Vertex &v)
-{
-	for (size_t i = 0; i < N; i++)
-	{
-		if (v.vec[i] < L.vec[i]) v.vec[i] = L.vec[i] + 1e-12;
-		if (v.vec[i] > R.vec[i]) v.vec[i] = R.vec[i] - 1e-12;
-	}
-}
-
 
 bool BoksMethod::QuitCase()
 {

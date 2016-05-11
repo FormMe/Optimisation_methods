@@ -10,15 +10,12 @@ public:
 	virtual Vertex Calc(func _f, const Vertex &_x);
 
 protected:
-	Vertex x1;
 	Vertex x2;
 	Vertex x3;
-	Vertex grad;
 	vector<vector<double>> H;
 	vector<vector<double>> H1;
 	double lambda;
 
-	void Grad();
 	void Hessian();
 	void Inversion();
 };

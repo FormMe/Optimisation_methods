@@ -2,10 +2,8 @@
 
 NewtonMethod::NewtonMethod(ifstream& fin) :
 	Solver(fin),
-	x1(Vertex(N)),
 	x2(Vertex(N)),
 	x3(Vertex(N)),
-	grad(Vertex(N)),
 	H(vector<vector<double>>(N, vector<double>(N))),
 	H1(vector<vector<double>>(N, vector<double>(N))) {}
 
@@ -13,6 +11,7 @@ Vertex NewtonMethod::Calc(func _f, const Vertex &_x)
 {
 	x = _x;
 	f = _f;
+	CorrectVertex(x);
 	Grad();
 	for (auto i = 0; i < M && grad.norm() > eps; i++)
 	{
@@ -22,30 +21,20 @@ Vertex NewtonMethod::Calc(func _f, const Vertex &_x)
 		{
 			S = grad*H;
 			lambda = Fibbonachi(x, S);
-			x = x + S*lambda;
+			x = x + S*lambda;			
 		}
 		else
 		{
 			lambda = Fibbonachi(x, grad);
 			x = x + grad*lambda;
 		}
+		CorrectVertex(x);
 		Grad();
 	}
 	return x;
 }
 
 
-void NewtonMethod::Grad()
-{
-	auto fx = f(x.vec);
-	++funcCnt;
-	for (auto i = 0; i < N; i++)
-	{
-		x1 = x; x1.vec[i] += h;
-		grad.vec[i] = -(f(x1.vec) - fx) / h;
-		++funcCnt;
-	}
-}
 
 void NewtonMethod::Hessian()
 {

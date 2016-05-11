@@ -3,8 +3,6 @@
 
 NonlinearConjugateGradientMethod::NonlinearConjugateGradientMethod(ifstream& fin) :
 	Solver(fin),
-	x1(Vertex(N)),
-	grad(Vertex(N)),
 	grad1(Vertex(N)),
 	S(Vertex(N)) {}
 
@@ -14,26 +12,17 @@ Vertex NonlinearConjugateGradientMethod::Calc(func _f, const Vertex &_x)
 	f = _f;
 	Grad();
 	S = grad;
-	for (auto i = 0; i < M && S.norm() > eps; i++)
+	auto Snorm = 1.;
+	for (auto i = 0; i < M &&  Snorm > eps; i++)
 	{
 		lambda = Fibbonachi(x, S);
 		x = x + S*lambda;
-		FletcherReeves();
+		CorrectVertex(x);
+		PolakRibiere();
 		S = grad + S*w;
+		Snorm = S.norm();
 	}
 	return x;
-}
-
-void NonlinearConjugateGradientMethod::Grad()
-{
-	auto fx = f(x.vec);
-	++funcCnt;
-	for (auto i = 0; i < N; i++)
-	{
-		x1 = x; x1.vec[i] += h;
-		grad.vec[i] = -(f(x1.vec) - fx) / h;
-		++funcCnt;
-	}
 }
 
 void NonlinearConjugateGradientMethod::PolakRibiere()

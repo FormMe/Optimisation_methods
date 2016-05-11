@@ -6,8 +6,31 @@ Solver::Solver(ifstream &fin) : funcCnt(0)
 	x = Vertex(N);
 	prevX = Vertex(N);
 	S = Vertex(N);
+	L = Vertex(N);
+	R = Vertex(N);
+	x1 = Vertex(N);
+	grad = Vertex(N);
+	for (auto i = 0; i < N; ++i)
+		fin >> L.vec[i];
+	for (auto i = 0; i < N; ++i)
+		fin >> R.vec[i];
 }
 
+Solver::Solver(double _eps, double _eps1, double _l, double _lStep, double _h, double _h1, int _N, int _M, int _M1) :
+	eps(_eps),
+	eps1(_eps1),
+	l(_l),
+	lStep(_lStep),
+	h(_h),
+	h1(_h1),
+	N(_N),
+	M(_M),
+	M1(_M1)
+{
+	x = Vertex(N);
+	prevX = Vertex(N);
+	S = Vertex(N);
+}
 
 pair<double, double> Solver::FindInterval(double lambda0, double d, Vertex &_x, Vertex &_S)
 {
@@ -16,7 +39,6 @@ pair<double, double> Solver::FindInterval(double lambda0, double d, Vertex &_x, 
 
 	if (f((_x + _S*lambda0).vec) < f((_x + _S*(lambda0 + d)).vec))
 		d = -d;
-
 
 	funcCnt += 2;
 	while (f((_x + _S*lambda1).vec) > f((_x + _S*lambda2).vec))
@@ -27,22 +49,6 @@ pair<double, double> Solver::FindInterval(double lambda0, double d, Vertex &_x, 
 		lambda2 = lambda1 + d;
 		funcCnt += 2;
 	}
-
-	//if (f((_x + _S*lambda0).vec) < f((_x + _S*(lambda0 + d)).vec))
-	//	d = -d;
-
-	//do
-	//{
-	//	lambda1 = lambda0 + d;
-	//	d *= 2;
-	//	lambda2 = lambda1 + d;
-	//	lambda0 = lambda1;
-	//	funcCnt += 2;
-
-	//} while (f((_x + _S*lambda1).vec) > f((_x + _S*lambda2).vec));
-
-	//lambda0 -= d / 2;
-	//пофиксить вылетание за границы
 	return make_pair(min(lambda0, lambda2), max(lambda0, lambda2));
 }
 
@@ -84,7 +90,7 @@ double Solver::Fibbonachi(Vertex& _x, Vertex& _S)
 {
 	auto s = FindInterval(l, lStep, _x, _S);
 	double f1, f2;
-	auto fib_max = (s.second - s.first) /eps1;
+	auto fib_max = (s.second - s.first) / eps1;
 	long long int add_fib = 0;
 	vector<long long int> fibs{ 1,1 };
 	auto n = 2;
@@ -133,4 +139,27 @@ int Solver::GetFuncCnt()
 	auto tmp = funcCnt;
 	funcCnt = 0;
 	return tmp;
+}
+
+void Solver::CorrectVertex(Vertex &v)
+{
+	for (size_t i = 0; i < N; i++)
+	{
+		if (v.vec[i] < L.vec[i]) 	v.vec[i] = L.vec[i] + eps;
+		if (v.vec[i] > R.vec[i]) 	v.vec[i] = R.vec[i] - eps;
+	}
+}
+
+void Solver::Grad()
+{
+	auto fx = f(x.vec);
+	++funcCnt;
+	for (auto i = 0; i < N; i++)
+	{
+		x1 = x; x1.vec[i] += h;
+		CorrectVertex(x1);
+		auto fx1 = f(x1.vec);
+		grad.vec[i] = -(fx1 - fx) / h;
+		++funcCnt;
+	}
 }

@@ -18,13 +18,10 @@ private:
 	int max_ind;
 	double alpha;
 	
-	Vertex L;
-	Vertex R;
 	Vertex average;
 	
 	void InitCmplx();
 	void Average();
 	bool QuitCase();
-	void CorrectVertex(Vertex &v);
 };
 

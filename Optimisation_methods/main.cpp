@@ -22,20 +22,39 @@ void test2(func f, vector<func> G, Solver *s, string outFileName)
 {
 	Vertex x(vector<double>{0.2, 0.2});
 	//double r = 1.;
-	//double C = 10.;
-	double penalty_eps = 1e-10;
+	double C = 10.;
+	double penalty_eps = 1e-8;
 	int M = 100;
 
 	ofstream fout(outFileName);
-	for (auto C = 10e-20; C <= 1e20; C *= 10)
-		for (auto r = 10e-20; r <= 1e20; r *= 10)
-		{
-			PenaltyMethod pm(C, r, penalty_eps, M, x, f, G, s);
-			auto res = pm.Calc();
-			fout << C << "\t" << r << "\t" << res << "\t" << pm.GetFuncCount() << endl;
-		}
-
+	//for (auto C = 10e-20; C <= 1e20; C *= 10)
+	for (auto r = 10e-20; r <= 1e20; r *= 10)
+	{
+		PenaltyMethod pm(C, r, penalty_eps, M, x, f, G, s);
+		auto res = pm.Calc();
+		fout << C << "\t" << r << "\t" << res << "\t" << pm.GetFuncCount() << endl;
+	}
 }
+//
+//
+//void test3(func f, vector<func> G, string outFileName)
+//{
+//	Vertex x(vector<double>{0.2, 0.2});
+//	//double r = 1.;
+//	double C = 10.;
+//	double penalty_eps = 1e-8;
+//	int M = 100;
+//
+//	ofstream fout(outFileName);
+//	//for (auto C = 10e-20; C <= 1e20; C *= 10)
+//	for (auto r = 10e-20; r <= 1e20; r *= 10)
+//	{
+//		PenaltyMethod pm(C, r, penalty_eps, M, x, f, G, s);
+//		auto res = pm.Calc();
+//		fout << C << "\t" << r << "\t" << res << "\t" << pm.GetFuncCount() << endl;
+//	}
+//}
+
 
 int main()
 {
@@ -129,29 +148,21 @@ int main()
 	ifstream fin("input/input.txt");
 
 
-	//test2(f1, G, new NonlinearConjugateGradientMethod(fin), "output/cgm_output.txt");
-	//cout << "cgm_output.txt" << endl;
+	test2(f1, G, new NonlinearConjugateGradientMethod(fin), "output/cgm_output.txt");
 
 	//test2(f1, G, new NewtonMethod(fin), "output/newton_output.txt");
-	//cout << "newton_output.txt" << endl;
 
 	//test2(f1, G, new RosenbrockMethod(fin), "output/rosenbrock_output.txt");
-	//cout << "rosenbrock_output.txt" << endl;
 
 	//test2(f1, G, new LevenbergMarquardtMethod(fin), "output/LM_output.txt");
-	//cout << "LM_output.txt" << endl;
 
 	//test2(f1, G, new DavidonFletcherPowellMethod(fin), "output/DFP_output.txt");
-	//cout << "DFP_output.txt" << endl;
 
 	//test2(f1, G, new ThirdPearsonMethod(fin), "output/third_P_output.txt");
-	//cout << "third_P_output.txt" << endl;
 
 	//test2(f1, G, new GreenshtadtMethod(fin), "output/greenshtadt_output.txt");
-	//cout << "greenshtadt_output.txt" << endl;
 
 	//test2(f1, G, new GoldfarbMethod(fin), "output/Goldfrab_output.txt");
-	//cout << "Goldfrab_output.txt" << endl;
 
 
 	//Solver *BoksSolver = new BoksMethod(fin);
@@ -163,41 +174,33 @@ int main()
 
 	//fin.clear();
 	//fin.seekg(0, ios::beg);
-	test(f1, G, new NonlinearConjugateGradientMethod(fin), "output/cgm_output.txt");
-	//cout << "cgm_output.txt" << endl;
+	//test(f1, G, new NonlinearConjugateGradientMethod(fin), "output/cgm_output.txt");
 
 	//fin.clear();
 	//fin.seekg(0, ios::beg);
 	//test(f1, G, new NewtonMethod(fin), "output/newton_output.txt");
-	//cout << "newton_output.txt" << endl;
 
 	//fin.clear();
 	//fin.seekg(0, ios::beg);
 	//test(f1, G, new RosenbrockMethod(fin), "output/rosenbrock_output.txt");
-	//cout << "rosenbrock_output.txt" << endl;
 
 	//fin.clear();
 	//fin.seekg(0, ios::beg);
 	//test(f1, G, new LevenbergMarquardtMethod(fin), "output/LM_output.txt");
-	//cout << "LM_output.txt" << endl;
 
 	//fin.clear();
 	//fin.seekg(0, ios::beg);
 	//test(f1, G, new DavidonFletcherPowellMethod(fin), "output/DFP_output.txt");
-	//cout << "DFP_output.txt" << endl;
 
 	//fin.clear();
 	//fin.seekg(0, ios::beg);
 	//test(f1, G, new ThirdPearsonMethod(fin), "output/third_P_output.txt");
-	//cout << "third_P_output.txt" << endl;
 
 	//fin.clear();
 	//fin.seekg(0, ios::beg);
 	//test(f1, G, new GreenshtadtMethod(fin), "output/greenshtadt_output.txt");
-	//cout << "greenshtadt_output.txt" << endl;
 
 	//fin.clear();
 	//fin.seekg(0, ios::beg);
 	//test(f1, G, new GoldfarbMethod(fin), "output/Goldfrab_output.txt");
-	//cout << "Goldfrab_output.txt" << endl;
 }
