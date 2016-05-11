@@ -8,8 +8,7 @@ public:
 	BoksMethod(ifstream &fin);
 	~BoksMethod() {};
 
-	Vertex Calc(func _f);
-
+	virtual Vertex Calc(func _f, const Vertex &x);
 private:
 	int K;
 	vector<Vertex> cmplx;

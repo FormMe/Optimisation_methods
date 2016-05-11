@@ -27,8 +27,8 @@ void test2(func f, vector<func> G, Solver *s, string outFileName)
 	int M = 100;
 
 	ofstream fout(outFileName);
-	//for (auto C = 10e-20; C <= 1e20; C *= 10)
-	for (auto r = 10e-20; r <= 1e20; r *= 10)
+	//for (auto C = 1e-40; C <= 10; C *= 10)
+	for (auto r = 1e-40; r <= 1e+40; r *= 10)
 	{
 		PenaltyMethod pm(C, r, penalty_eps, M, x, f, G, s);
 		auto res = pm.Calc();
@@ -148,29 +148,43 @@ int main()
 	ifstream fin("input/input.txt");
 
 
-	test2(f1, G, new NonlinearConjugateGradientMethod(fin), "output/cgm_output.txt");
+	Solver *BoksSolver = new BoksMethod(fin);
+	cout << BoksSolver->Calc(f1, Vertex(vector<double>{0, 0})) << endl;
+	cout << BoksSolver->GetFuncCnt() << endl;
+	system("pause");
 
+
+	//test2(f1, G, new NonlinearConjugateGradientMethod(fin), "output/cgm_output.txt");
+
+	//fin.clear();
+	//fin.seekg(0, ios::beg);
 	//test2(f1, G, new NewtonMethod(fin), "output/newton_output.txt");
 
+	//fin.clear();
+	//fin.seekg(0, ios::beg);
 	//test2(f1, G, new RosenbrockMethod(fin), "output/rosenbrock_output.txt");
 
+	//fin.clear();
+	//fin.seekg(0, ios::beg);
 	//test2(f1, G, new LevenbergMarquardtMethod(fin), "output/LM_output.txt");
 
+	//fin.clear();
+	//fin.seekg(0, ios::beg);
 	//test2(f1, G, new DavidonFletcherPowellMethod(fin), "output/DFP_output.txt");
 
+	//fin.clear();
+	//fin.seekg(0, ios::beg);
 	//test2(f1, G, new ThirdPearsonMethod(fin), "output/third_P_output.txt");
 
+	//fin.clear();
+	//fin.seekg(0, ios::beg);
 	//test2(f1, G, new GreenshtadtMethod(fin), "output/greenshtadt_output.txt");
 
+	//fin.clear();
+	//fin.seekg(0, ios::beg);
 	//test2(f1, G, new GoldfarbMethod(fin), "output/Goldfrab_output.txt");
 
-
-	//Solver *BoksSolver = new BoksMethod(fin);
-
-	//Solver *solver = new NewtonMethod(fin);
-	//cout << solver->Calc(f1, Vertex(vector<double>{5, 5})) << endl;
-	//cout << solver->GetFuncCnt() << endl;
-	//system("pause");
+	/* האכüרו ס פאיכא*/
 
 	//fin.clear();
 	//fin.seekg(0, ios::beg);

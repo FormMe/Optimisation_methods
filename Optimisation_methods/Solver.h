@@ -7,18 +7,18 @@ class Solver
 public:
 	Solver(ifstream &fin);
 	Solver(
-	double eps,
-	double eps1,
-	double l,
-	double lStep,
-	double h,
-	double h1,
-	int N,
-	int M,
-	int M1);
+		double eps,
+		double eps1,
+		double l,
+		double lStep,
+		double h,
+		double h1,
+		int N,
+		int M,
+		int M1);
 
-	virtual Vertex Calc(func _f, const Vertex &x) { return{}; };
-	
+	virtual Vertex Calc(func _f, const Vertex &x) = 0;
+
 
 	int GetFuncCnt();
 

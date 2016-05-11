@@ -3,10 +3,10 @@
 
 BoksMethod::BoksMethod(ifstream& fin) :
 	Solver(fin),
-	cmplx(vector<Vertex>(K)),
-	F(vector<double>(K)),
 	average(Vertex(N)),
-	K(2*N)
+	K(2 * N),
+	cmplx(vector<Vertex>(K, Vertex(N))),
+	F(vector<double>(K))
 {
 	fin >> alpha;
 	for (auto i = 0; i < N; ++i)
@@ -15,9 +15,10 @@ BoksMethod::BoksMethod(ifstream& fin) :
 		fin >> R.vec[i];
 }
 
-Vertex BoksMethod::Calc(func _f)
+Vertex BoksMethod::Calc(func _f, const Vertex &_x)
 {
 	f = _f;
+	x = _x;
 	InitCmplx();
 	for (auto i = 0; i < M && !QuitCase(); i++)
 	{
@@ -51,10 +52,14 @@ void BoksMethod::InitCmplx()
 
 	cmplx[0] = x;
 	F[0] = f(cmplx[0].vec);
-	generate(cmplx.begin() + 1, cmplx.end(), [&]() {return L + (R - L)* dis(gen); });
+
+	for (auto it = cmplx.begin() + 1; it != cmplx.end(); ++it)
+		for (size_t i = 0; i < N; i++)
+			it->vec[i] = L.vec[i] + (R.vec[i] - L.vec[i]) * dis(gen);
+
 	auto i = 1;
 	generate(F.begin() + 1, F.end(), [&]() {return f(cmplx[i++].vec); });
-	funcCnt += N - 1;
+	funcCnt += N;
 }
 
 void BoksMethod::Average()
@@ -71,11 +76,11 @@ bool BoksMethod::QuitCase()
 {
 	auto ff = accumulate(F.begin(), F.end(), 0) / K;
 	auto d1 = sqrt(accumulate(F.begin(), F.end(), 0,
-				[&ff](double a, double b)
-				{
-					return (a - ff)*(a - ff) + (b - ff)*(b - ff);
-				})) 
-				/ (K - 1);
+		[&ff](double a, double b)
+	{
+		return (a - ff)*(a - ff) + (b - ff)*(b - ff);
+	}))
+		/ (K - 1);
 
 	auto d2 = 0.0;
 	for (auto i = 0; i < K; i++)
