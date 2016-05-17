@@ -2,34 +2,7 @@
 #include <numeric>
 
 
-PenaltyMethod::PenaltyMethod(ifstream &fin, const func &_f, const vector<func> &_g, Solver *_s) :
-	s(_s),
-	f(_f),
-	g(_g)
-{
-	fin >> N >> M >> r >> C >> penalty_eps;
-	x = Vertex(N);
-	for (auto &x0 : x.vec)
-		fin >> x0;
-}
-
-PenaltyMethod::PenaltyMethod(double _C, double _r, double _penalty_eps, int _M, Vertex _x, const func& _f, const vector<func>& _g, Solver* _s) :
-	C(_C),
-	r(_r),
-	penalty_eps(_penalty_eps),
-	M(_M),
-	x(_x),
-	N(x.vec.size()),
-	s(_s),
-	f(_f),
-	g(_g) {	}
-
-int PenaltyMethod::GetFuncCount()
-{
-	return  s->GetFuncCnt();
-}
-
-Vertex PenaltyMethod::Calc()
+Vertex PenaltyMethod::Calculate()
 {
 
 	auto quit = false;
@@ -84,4 +57,42 @@ Vertex PenaltyMethod::Calc()
 		r /= C;
 	}
 	return x;
+}
+
+PenaltyMethod::PenaltyMethod(ifstream &fin, const func &_f, const vector<func> &_g, Solver *_s) :
+	s(_s),
+	f(_f),
+	g(_g)
+{
+	fin >> N >> M >> r >> C >> penalty_eps;
+	x = Vertex(N);
+	for (auto &x0 : x.vec)
+		fin >> x0;
+}
+
+PenaltyMethod::PenaltyMethod(double _C, double _r, double _penalty_eps, int _M, Vertex _x, const func& _f, const vector<func>& _g, Solver* _s) :
+	C(_C),
+	r(_r),
+	penalty_eps(_penalty_eps),
+	M(_M),
+	x(_x),
+	N(x.vec.size()),
+	s(_s),
+	f(_f),
+	g(_g) {	}
+
+int PenaltyMethod::GetFuncCount()
+{
+	return  s->GetFuncCnt();
+}
+
+Vertex PenaltyMethod::Calc()
+{
+	return Calculate();
+}
+
+Vertex PenaltyMethod::Calc(Vertex _x)
+{
+	x = _x;
+	return Calculate();
 }

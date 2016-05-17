@@ -28,6 +28,7 @@ void test2(func f, vector<func> G, Solver *s, string outFileName)
 
 	ofstream fout(outFileName);
 	//for (auto C = 1e-40; C <= 10; C *= 10)
+	//ÀÒÅÍØÍ. ÌÅÒÎÄ ÀÁÍÎÂËßÈÖÀ ÕÓÉÎÂÎ
 	for (auto r = 1e-40; r <= 1e+40; r *= 10)
 	{
 		PenaltyMethod pm(C, r, penalty_eps, M, x, f, G, s);
@@ -148,10 +149,10 @@ int main()
 	ifstream fin("input/input.txt");
 
 
-	Solver *BoksSolver = new BoksMethod(fin);
-	cout << BoksSolver->Calc(f1, Vertex(vector<double>{0, 0})) << endl;
-	cout << BoksSolver->GetFuncCnt() << endl;
-	system("pause");
+	//Solver *BoksSolver = new BoksMethod(fin);
+	//cout << BoksSolver->Calc(f1, Vertex(vector<double>{0, 0})) << endl;
+	//cout << BoksSolver->GetFuncCnt() << endl;
+	//system("pause");
 
 
 	//test2(f1, G, new NonlinearConjugateGradientMethod(fin), "output/cgm_output.txt");
@@ -162,7 +163,7 @@ int main()
 
 	//fin.clear();
 	//fin.seekg(0, ios::beg);
-	//test2(f1, G, new RosenbrockMethod(fin), "output/rosenbrock_output.txt");
+	test2(f1, G, new RosenbrockMethod(fin), "output/rosenbrock_output.txt");
 
 	//fin.clear();
 	//fin.seekg(0, ios::beg);

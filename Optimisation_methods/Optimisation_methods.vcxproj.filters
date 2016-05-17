@@ -57,6 +57,9 @@
     <ClCompile Include="PenaltyMethod.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
+    <ClCompile Include="GlobalMinimizator.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Solver.h">
@@ -99,6 +102,9 @@
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
     <ClInclude Include="PenaltyMethod.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalMinimizator.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
   </ItemGroup>

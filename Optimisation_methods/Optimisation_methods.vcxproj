@@ -112,6 +112,7 @@
   <ItemGroup>
     <ClCompile Include="BoksMethod.cpp" />
     <ClCompile Include="DavidonFletcherPowellMethod.cpp" />
+    <ClCompile Include="GlobalMinimizator.cpp" />
     <ClCompile Include="GoldfarbMethod.cpp" />
     <ClCompile Include="GreenshtadtMethod.cpp" />
     <ClCompile Include="LevenbergMarquardtMethod.cpp" />
@@ -128,6 +129,7 @@
   <ItemGroup>
     <ClInclude Include="BoksMethod.h" />
     <ClInclude Include="DavidonFletcherPowellMethod.h" />
+    <ClInclude Include="GlobalMinimizator.h" />
     <ClInclude Include="GoldfarbMethod.h" />
     <ClInclude Include="GreenshtadtMethod.h" />
     <ClInclude Include="LevenbergMarquardtMethod.h" />

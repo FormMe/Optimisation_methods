@@ -50,12 +50,13 @@ void BoksMethod::InitCmplx()
 	mt19937 gen(rd());
 	uniform_real_distribution<> dis(0, 1);
 
+
 	cmplx[0] = x;
 	F[0] = f(cmplx[0].vec);
 
 	for (auto it = cmplx.begin() + 1; it != cmplx.end(); ++it)
 		for (size_t i = 0; i < N; i++)
-			it->vec[i] = L.vec[i] + (R.vec[i] - L.vec[i]) * dis(gen);
+			it->vec[i] = L.vec[i] + (R.vec[i] - L.vec[i]) * generate_canonical<double, 20>(gen);
 
 	auto i = 1;
 	generate(F.begin() + 1, F.end(), [&]() {return f(cmplx[i++].vec); });
@@ -74,9 +75,9 @@ void BoksMethod::Average()
 
 bool BoksMethod::QuitCase()
 {
-	auto ff = accumulate(F.begin(), F.end(), 0) / K;
-	auto d1 = sqrt(accumulate(F.begin(), F.end(), 0,
-		[&ff](double a, double b)
+	auto ff = accumulate(F.begin(), F.end(), 0.0) / K;
+	auto d1 = sqrt(accumulate(F.begin(), F.end(), 0.0,
+	[&ff](double a, double b)
 	{
 		return (a - ff)*(a - ff) + (b - ff)*(b - ff);
 	}))

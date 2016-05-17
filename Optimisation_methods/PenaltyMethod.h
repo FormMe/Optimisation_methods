@@ -17,6 +17,8 @@ private:
 	int M;
 	int N;
 
+	Vertex Calculate();
+
 public:
 	PenaltyMethod(ifstream &fin, const func &_f, const vector<func> &_g, Solver *_s);
 
@@ -25,5 +27,6 @@ public:
 	int GetFuncCount();
 
 	Vertex Calc();
+	Vertex Calc(Vertex x);
 };
 
