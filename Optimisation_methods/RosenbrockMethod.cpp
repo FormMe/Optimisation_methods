@@ -31,7 +31,6 @@ void RosenbrockMethod::MinDirections()
 {
 	for (auto j = 0; j < N; j++)
 	{
-		//слишком маламя лямбда не влияет на х
 		lambda[j] = GSS(x, S[j]);
 		x = x + S[j] * lambda[j];
 		CorrectVertex(x);

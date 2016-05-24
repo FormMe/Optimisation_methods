@@ -8,16 +8,28 @@ public:
 		R(r),
 		N(R.vec.size()),
 		x(Vertex(N)),
-		minX(Vertex(N)) { };
+		minX(Vertex(N)),
+		funcCnt(0)
+	{
+		
+	};
 
 	Vertex Calc(PenaltyMethod *solver, func f, int M);
+	int GetFuncCount();
+
 private:
 	Vertex L;
 	Vertex R;
-	Vertex x;
-	Vertex minX;
+
+	vector<pair<Vertex, Vertex>> sectors;
+
 	int N;
 
+	Vertex x;
+	Vertex minX;
+
+
+	int funcCnt;
 	void GetRandomX();
 };
 

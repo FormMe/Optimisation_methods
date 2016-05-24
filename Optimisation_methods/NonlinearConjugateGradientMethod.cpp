@@ -15,7 +15,7 @@ Vertex NonlinearConjugateGradientMethod::Calc(func _f, const Vertex &_x)
 	auto Snorm = 1.;
 	for (auto i = 0; i < M &&  Snorm > eps; i++)
 	{
-		lambda = Fibbonachi(x, S);
+		lambda = GSS(x, S);
 		x = x + S*lambda;
 		CorrectVertex(x);
 		PolakRibiere();

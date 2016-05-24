@@ -60,6 +60,9 @@
     <ClCompile Include="GlobalMinimizator.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
+    <ClCompile Include="StaticalGradMethod.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Solver.h">
@@ -105,6 +108,9 @@
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
     <ClInclude Include="GlobalMinimizator.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticalGradMethod.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
   </ItemGroup>

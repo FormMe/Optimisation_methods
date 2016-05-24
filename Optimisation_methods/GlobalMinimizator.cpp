@@ -5,31 +5,56 @@ Vertex GlobalMinimizator::Calc(PenaltyMethod* solver, func f, int M)
 {
 	vector<Vertex> x_vector(M, Vertex(N));
 	vector<double> Fx_vector(M);
-	generate(x_vector.begin(), x_vector.end(),
-	[&]()
+
+	std::generate(x_vector.begin(), x_vector.end(),
+		[&]()
 	{
 		GetRandomX();
 		return x;
 	});
-	auto i = 1;
-	generate(Fx_vector.begin() + 1, Fx_vector.end(), 
-	[&]()
+
+	auto i = 0;
+	std::generate(Fx_vector.begin(), Fx_vector.end(),
+		[&]()
 	{
 		return f(x_vector[i++].vec);
 	});
 
-	auto minF_ind = min_element(Fx_vector.begin(), Fx_vector.end()) - Fx_vector.begin();
-	x = x_vector[minF_ind];
 
-	auto isNewXfound = false;
+	auto ind = vector<int>(M);
+	for (auto k = 0; k < M; k++) ind[k] = k;
+	sort(ind.begin(), ind.end(), [&Fx_vector](const int l, const int r) {return Fx_vector[l] < Fx_vector[r]; });
+	auto minF_ind = ind.front();
+
+	//auto minF_ind = min_element(Fx_vector.begin(), Fx_vector.end()) - Fx_vector.begin();
+
+
+	x = x_vector[minF_ind];
+	funcCnt += M;
+
+
+
+	auto minF = f(x.vec);
+	bool isNewXfound = false;
+	auto stop = 0;
 	do
 	{
-		minX = solver->Calc(x);
-		auto minF = f(minX.vec);
-		for (size_t i = 0; i < M && !isNewXfound; i++)
+		x = solver->Calc(x);
+		++funcCnt;
+		auto fx = f(x.vec);
+		if (fx < minF)
+		{
+			minX = x;
+			minF = fx;
+		}
+
+		funcCnt += solver->GetFuncCount();
+		isNewXfound = false;
+		for (i = 0; i < M && !isNewXfound; i++)
 		{
 			GetRandomX();
 			isNewXfound = f(x.vec) < minF;
+			++funcCnt;
 		}
 	} while (isNewXfound);
 
@@ -45,4 +70,9 @@ void GlobalMinimizator::GetRandomX()
 		uniform_real_distribution<> dis(L.vec[i], R.vec[i]);
 		x.vec[i] = dis(gen);
 	}
+}
+
+int GlobalMinimizator::GetFuncCount()
+{
+	return funcCnt;
 }
