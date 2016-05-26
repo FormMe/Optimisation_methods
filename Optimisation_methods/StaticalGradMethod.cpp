@@ -5,15 +5,23 @@ Vertex StaticalGradMethod::Calc(func _f, const Vertex& _x)
 	f = _f; x = _x;
 	auto prevF = f(x.vec) + 1;
 	funcCnt+=2;
-	for (auto i = 0; i < M && abs(prevF - f(x.vec)) > eps; i++)
+	auto quitCase = false;
+	auto step = _step;
+	for (auto i = 0; i < M && !quitCase; i++)
 	{
 		GenerateDirections();
-		Calculate_dF();
+		Calculate_dF(step);
 		auto S = dF / (-dF.norm());
 		lambda = GSS(x, S);
 		prevF = f(x.vec);
 		funcCnt+=2;
 		x = x + S*lambda;
+
+	/*	quitCase = false;
+		for (auto j = 0; j < N && !quitCase; j++)
+			quitCase = fabs(x.vec[0] - prevX.vec[0]) > eps;
+		if (!quitCase)*/
+			quitCase = abs(prevF - f(x.vec)) <= eps;
 	}
 	return x;
 }
@@ -28,7 +36,7 @@ void StaticalGradMethod::GenerateDirections()
 			coord = dis(gen) % 2;
 }
 
-void StaticalGradMethod::Calculate_dF()
+void StaticalGradMethod::Calculate_dF(double step)
 {
 	dF = Vertex(N);
 	auto fx = f(x.vec);

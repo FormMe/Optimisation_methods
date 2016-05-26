@@ -19,7 +19,7 @@ Vertex RosenbrockMethod::Calc(func _f, const Vertex &_x)
 		prevX = x;
 		MinDirections();
 		FindDirectios();
-		GramSchmidtProcess();
+		PalmerProcess();
 		f = true;
 		for (auto j = 0; j < N && f; j++)
 			f = fabs(x.vec[0] - prevX.vec[0]) <= eps;
@@ -33,7 +33,7 @@ void RosenbrockMethod::MinDirections()
 	{
 		lambda[j] = GSS(x, S[j]);
 		x = x + S[j] * lambda[j];
-		CorrectVertex(x);
+		//CorrectVertex(x);
 	}
 }
 

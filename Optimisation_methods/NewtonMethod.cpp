@@ -39,7 +39,6 @@ Vertex NewtonMethod::Calc(func _f, const Vertex &_x)
 void NewtonMethod::Hessian()
 {
 	auto fx = f(x.vec);
-	++funcCnt;
 	for (auto i = 0; i < N; i++)
 	{
 		for (auto j = i; j < N; j++)
@@ -51,7 +50,6 @@ void NewtonMethod::Hessian()
 			auto f2 = f(x2.vec);
 			auto f3 = f(x3.vec);
 			H[i][j] = H[j][i] = (f1 - f2 - f3 + fx) / (h1*h1);
-			funcCnt += 3;
 		}
 	}
 }

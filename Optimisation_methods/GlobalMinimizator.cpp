@@ -6,6 +6,9 @@ Vertex GlobalMinimizator::Calc(PenaltyMethod* solver, func f, int M)
 	vector<Vertex> x_vector(M, Vertex(N));
 	vector<double> Fx_vector(M);
 
+	if(true)
+	{
+		
 	std::generate(x_vector.begin(), x_vector.end(),
 		[&]()
 	{
@@ -26,17 +29,19 @@ Vertex GlobalMinimizator::Calc(PenaltyMethod* solver, func f, int M)
 	sort(ind.begin(), ind.end(), [&Fx_vector](const int l, const int r) {return Fx_vector[l] < Fx_vector[r]; });
 	auto minF_ind = ind.front();
 
-	//auto minF_ind = min_element(Fx_vector.begin(), Fx_vector.end()) - Fx_vector.begin();
+//	auto minF_ind = min_element(Fx_vector.begin(), Fx_vector.end()) - Fx_vector.begin();
 
 
 	x = x_vector[minF_ind];
 	funcCnt += M;
 
-
+	}
+	else GetRandomX();
 
 	auto minF = f(x.vec);
 	bool isNewXfound = false;
 	auto stop = 0;
+	//int i = 0;
 	do
 	{
 		x = solver->Calc(x);
@@ -49,8 +54,10 @@ Vertex GlobalMinimizator::Calc(PenaltyMethod* solver, func f, int M)
 		}
 
 		funcCnt += solver->GetFuncCount();
+	//	GetRandomX();
+
 		isNewXfound = false;
-		for (i = 0; i < M && !isNewXfound; i++)
+		for (int j = 0; j < M && !isNewXfound; j++)
 		{
 			GetRandomX();
 			isNewXfound = f(x.vec) < minF;

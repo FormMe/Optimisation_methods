@@ -1,3 +1,5 @@
+#include <ctime>
+
 #include "NewtonMethod.h"
 #include "NonlinearConjugateGradientMethod.h"
 #include "RosenbrockMethod.h"
@@ -10,46 +12,62 @@
 #include "PenaltyMethod.h"
 #include "GlobalMinimizator.h"
 #include "StaticalGradMethod.h"
-#include <ctime>
+#include "AdaptiveCasualMethod.h"
 
 void test(func f, vector<func> G, Solver *s, string outFileName)
 {
-	ifstream fin2("input/input_penalty.txt");
-	PenaltyMethod pm(fin2, f, G, s);
-	auto res = pm.Calc();
+	double r = 1e12;
+	double C = 10.;
+	double penalty_eps = 1e-16;
+	int M = 100;
 	ofstream fout(outFileName);
-	fout << "f" << res << "\t = " << f(res.vec) << "\t" << s->GetFuncCnt() << endl;
+	random_device rd;
+	mt19937 gen(rd());
+	uniform_real_distribution<> dis1(-10, -1);
+	uniform_real_distribution<> dis2(-10, -3);
+	for (int i = 0; i <= 8; i++)
+	//for (r = 1e-20; r <= 1e+20; r*=100)
+	{
+		Vertex x(vector<double>{dis1(gen), dis2(gen)});
+		PenaltyMethod pm(C, r, penalty_eps, M, x, f, G, s);
+		auto res = pm.Calc();
+		fout << x << "\t" << res << "\t" << f(res.vec) << "\t" << s->GetFuncCnt() << "\t" << r  << endl;
+	}
+	//PenaltyMethod pm(C, r, penalty_eps, M, x, f, G, s);
+	//auto res = pm.Calc();
+	//fout << res << "\t" << f(res.vec) <<  "\t" << s->GetFuncCnt() << "\t" << r << endl;
 }
 
 void test2(func f, vector<func> G, Solver *s, string outFileName)
 {
 	Vertex x(vector<double>{0.2, 0.2, 0.2, 0.2, 0.2});
 	//Vertex x(vector<double>{0.2, 0.2});
-	double r = 1e+20;
+	double r = 1e-4;
 	double C = 10.;
-	double penalty_eps = 1e-15;
+	double penalty_eps = 1e-13;
 	int M = 100;
 	Vertex L(vector<double>{2, 0.1, 0.1, 0.1, 0});
 	Vertex R(vector<double>{100, 2, 0.45, 0.45, 1});
 	//Vertex L(vector<double>{-512, -512});
 	//Vertex R(vector<double>{512, 512});
 	ofstream fout(outFileName);
+	fout.setf(ios::scientific);
+	fout.precision(16);
 	//for (C = 1e-40; C <= 10; C *= 10)
 
-	for (int i = 1000000; i < 10000000; i += 1000000)
+	for (int i = 100000; i <= 500000; i += 100000)
 	{
-		PenaltyMethod pm(C, r, penalty_eps, M, x, f, G, s);
-		GlobalMinimizator gm(L, R);
+		for (size_t j = 0; j < 6; j++)
+		{
+			PenaltyMethod pm(C, r, penalty_eps, M, x, f, G, s);
+			GlobalMinimizator gm(L, R);
 
-		auto start_time = clock(); // начальное время
+			auto res = gm.Calc(&pm, f, i);
 
-		auto res = gm.Calc(&pm, f, i);
-
-		auto end_time = clock(); // конечное время
-		auto search_time = end_time - start_time; // искомое время
-
-		fout << i <<"\tf" << res << "\t = " << f(res.vec) << "\t" << gm.GetFuncCount() << "\t" << search_time / 1000 << endl;
-
+			cout << j << endl;
+			fout << res << "\t" << f(res.vec) << "\t" << gm.GetFuncCount() << "\t" << i << endl;
+		}
+		cout << i << endl;
 	}
 
 
@@ -170,10 +188,10 @@ int main()
 
 
 	//auto G = vector<func>({
-	//	[](vector<double> vec) { return vec[0] -512; },
-	//	[](vector<double> vec) { return vec[1] -512; },
-	//	[](vector<double> vec) { return -512 - vec[0]; },
-	//	[](vector<double> vec) { return -512 - vec[1]; }
+	//	[](vector<double> vec) { return vec[0] + 1; },
+	//	[](vector<double> vec) { return vec[1] + 3; },
+	//	[](vector<double> vec) { return -10 - vec[0]; },
+	//	[](vector<double> vec) { return -10 - vec[1]; }
 	//});
 
 
@@ -190,81 +208,63 @@ int main()
 		[](vector<double> vec) { return 0.0 - vec[4]; },
 	});
 
+	//cout.setf(ios::scientific);
+	//cout.precision(16);
+	//cout << g(Vertex(vector<double>{
+	//		2.000003699151131e+00,
+	//		1.000000000000000e-01,
+	//		1.000023521497010e-01,
+	//		4.472463285653688e-01,
+	//		1.000000000000000e+00
+	//}).vec) << endl;
+	//system("pause");
 
 	ifstream fin("input/input.txt");
 
 
 	//Solver *BoksSolver = new BoksMethod(fin);
-	//cout << BoksSolver->Calc(f1, Vertex(vector<double>{0, 0})) << endl;
-	//cout << BoksSolver->GetFuncCnt() << endl;
+	//auto x = BoksSolver->Calc(f1, Vertex(vector<double>{50, 1, 0.3, 0.3, 0.50}));
+	//cout << f(x.vec) << endl << x << endl << BoksSolver->GetFuncCnt() << endl;
 	//system("pause");
 
 
-	//test2(g, G, new NonlinearConjugateGradientMethod(fin), "output/cgm_output.txt");
+//	test2(f, G, new NonlinearConjugateGradientMethod(fin), "output/f_cgm_output.txt");
+	//cout << "f NonlinearConjugateGradientMethod" << endl;
 
 	//fin.clear();
 	//fin.seekg(0, ios::beg);
-	//test2(g, G, new NewtonMethod(fin), "output/newton_output.txt");
+	//test2(f, G, new NewtonMethod(fin), "output/f_newton_output.txt");
+	//cout << "f NewtonMethod" << endl;
 
 	//fin.clear();
 	//fin.seekg(0, ios::beg);
-	test2(f, G, new StaticalGradMethod(fin), "output/StaticalGrad_output.txt");
+//	test(f1, G, new StaticalGradMethod(fin), "output/StaticalGrad_output.txt");
+	//test
+	//cout << "f StaticalGradMethod" << endl;
 
 	//fin.clear();
 	//fin.seekg(0, ios::beg);
-	//test2(f, G, new RosenbrockMethod(fin), "output/rosenbrock_output.txt");
+	//test2(f, G, new RosenbrockMethod(fin), "output/f_rosenbrock_output.txt");
+	//cout << "f RosenbrockMethod" << endl;
 
+	////fin.clear();
+	////fin.seekg(0, ios::beg);
+	//test2(g, G, new NewtonMethod(fin), "output/g_NewtonMethod_output.txt");
 	//fin.clear();
 	//fin.seekg(0, ios::beg);
-	//test2(f, G, new LevenbergMarquardtMethod(fin), "output/LM_output.txt");
+	//test2(f, G, new NewtonMethod(fin), "output/f_NewtonMethod_output.txt");
+	////cout << "f AdaptiveCasualMethod" << endl;
 
 	//fin.clear();
-	//fin.seekg(0, ios::beg);
-	//test2(f1, G, new DavidonFletcherPowellMethod(fin), "output/DFP_output.txt");
-
+	////fin.seekg(0, ios::beg);
+	test2(g, G, new AdaptiveCasualMethod(fin), "output/AdaptiveCasualMethod_output.txt");
+	fin.clear();
+	fin.seekg(0, ios::beg);
+	test2(f, G, new AdaptiveCasualMethod(fin), "output/AdaptiveCasualMethod1_output.txt");
 	//fin.clear();
 	//fin.seekg(0, ios::beg);
-	//test2(f1, G, new ThirdPearsonMethod(fin), "output/third_P_output.txt");
+//	test(f2, G, new RosenbrockMethod(fin), "output/AdaptiveCasualMethod2_output.txt");
 
-	//fin.clear();
-	//fin.seekg(0, ios::beg);
-	//test2(f1, G, new GreenshtadtMethod(fin), "output/greenshtadt_output.txt");
-
-	//fin.clear();
-	//fin.seekg(0, ios::beg);
-	//test2(f1, G, new GoldfarbMethod(fin), "output/Goldfrab_output.txt");
-
-	/* дальше с файла*/
-
-	//fin.clear();
-	//fin.seekg(0, ios::beg);
-	//test(f1, G, new NonlinearConjugateGradientMethod(fin), "output/cgm_output.txt");
-
-	//fin.clear();
-	//fin.seekg(0, ios::beg);
-	//test(f1, G, new NewtonMethod(fin), "output/newton_output.txt");
-
-	//fin.clear();
-	//fin.seekg(0, ios::beg);
-	//test(f1, G, new RosenbrockMethod(fin), "output/rosenbrock_output.txt");
-
-	//fin.clear();
-	//fin.seekg(0, ios::beg);
-	//test(f1, G, new LevenbergMarquardtMethod(fin), "output/LM_output.txt");
-
-	//fin.clear();
-	//fin.seekg(0, ios::beg);
-	//test(f1, G, new DavidonFletcherPowellMethod(fin), "output/DFP_output.txt");
-
-	//fin.clear();
-	//fin.seekg(0, ios::beg);
-	//test(f1, G, new ThirdPearsonMethod(fin), "output/third_P_output.txt");
-
-	//fin.clear();
-	//fin.seekg(0, ios::beg);
-	//test(f1, G, new GreenshtadtMethod(fin), "output/greenshtadt_output.txt");
-
-	//fin.clear();
-	//fin.seekg(0, ios::beg);
-	//test(f1, G, new GoldfarbMethod(fin), "output/Goldfrab_output.txt");
+	//test2(f, G, new LevenbergMarquardtMethod(fin), "output/f_LM_output.txt");
+	//cout << "f LevenbergMarquardtMethod" << endl;
 }

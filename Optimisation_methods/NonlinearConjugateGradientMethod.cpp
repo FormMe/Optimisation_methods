@@ -17,7 +17,6 @@ Vertex NonlinearConjugateGradientMethod::Calc(func _f, const Vertex &_x)
 	{
 		lambda = GSS(x, S);
 		x = x + S*lambda;
-		CorrectVertex(x);
 		PolakRibiere();
 		S = grad + S*w;
 		Snorm = S.norm();
@@ -25,6 +24,7 @@ Vertex NonlinearConjugateGradientMethod::Calc(func _f, const Vertex &_x)
 	return x;
 }
 
+//CorrectVertex(x);
 void NonlinearConjugateGradientMethod::PolakRibiere()
 {
 	grad1 = grad;

@@ -25,7 +25,7 @@ Vertex BoksMethod::Calc(func _f, const Vertex &_x)
 		max_ind = max_element(F.begin(), F.end()) - F.begin();
 		Average();
 		x = average + (average - cmplx[max_ind])*alpha;
-		while (true)
+		for (size_t i = 0; i < M; i++)
 		{
 			CorrectVertex(x);
 			auto fr = f(x.vec);
@@ -39,8 +39,8 @@ Vertex BoksMethod::Calc(func _f, const Vertex &_x)
 			else x = (x + average) / 2;
 		}
 	}
-
-	return cmplx[min_element(F.begin(), F.end()) - F.begin()];
+	auto min_ind = min_element(F.begin(), F.end()) - F.begin();
+	return cmplx[min_ind];
 }
 
 

@@ -89,7 +89,10 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -110,6 +113,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AdaptiveCasualMethod.cpp" />
     <ClCompile Include="BoksMethod.cpp" />
     <ClCompile Include="DavidonFletcherPowellMethod.cpp" />
     <ClCompile Include="GlobalMinimizator.cpp" />
@@ -128,6 +132,7 @@
     <ClCompile Include="ThirdPearsonMethod.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AdaptiveCasualMethod.h" />
     <ClInclude Include="BoksMethod.h" />
     <ClInclude Include="DavidonFletcherPowellMethod.h" />
     <ClInclude Include="GlobalMinimizator.h" />

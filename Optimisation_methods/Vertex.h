@@ -108,10 +108,10 @@ struct Vertex
 	{
 		ostream_.setf(ios::scientific);
 		ostream_.precision(16);
-		ostream_ << "[ ";
+		/*for (auto x : v.vec)
+			ostream_ << x << endl;*/
 		for (auto x : v.vec)
-			ostream_ << x << ", ";
-		ostream_ << " ]";
+			ostream_ << x << " ";
 		return ostream_;
 	}
 };

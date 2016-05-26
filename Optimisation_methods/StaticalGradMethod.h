@@ -9,7 +9,7 @@ public:
 		Solver(fin),
 		dF(Vertex(N))
 	{
-		fin >> trials >> step;
+		fin >> trials >> _step;
 		directions = vector<Vertex>(trials, Vertex(N));
 	}
 
@@ -17,12 +17,12 @@ public:
 
 private:
 	int trials;
-	double step;
+	double _step;
 	double lambda;
 	vector<Vertex> directions;
 	Vertex dF;
 
 	void GenerateDirections();
-	void Calculate_dF();
+	void Calculate_dF(double step);
 };
 

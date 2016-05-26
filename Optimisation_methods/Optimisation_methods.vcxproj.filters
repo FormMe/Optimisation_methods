@@ -63,6 +63,9 @@
     <ClCompile Include="StaticalGradMethod.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
+    <ClCompile Include="AdaptiveCasualMethod.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Solver.h">
@@ -111,6 +114,9 @@
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
     <ClInclude Include="StaticalGradMethod.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="AdaptiveCasualMethod.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
   </ItemGroup>
